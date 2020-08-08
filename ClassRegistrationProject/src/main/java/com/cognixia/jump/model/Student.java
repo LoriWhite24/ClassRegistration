@@ -30,7 +30,7 @@ public class Student implements Serializable{
 	private String password;
 	private int creditHours;
 	@OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<Registration> registeryEntries = new HashSet<Registration>();
+	private Set<Registration> registryEntries = new HashSet<Registration>();
 
 	public Student() {
 		this(-1L, "N/A", "N/A", "N/A", 0);
@@ -85,12 +85,12 @@ public class Student implements Serializable{
 		this.creditHours = creditHours;
 	}
 
-	public Set<Registration> getRegisteryEntries() {
-		return registeryEntries;
+	public Set<Registration> getRegistryEntries() {
+		return registryEntries;
 	}
 
-	public void setRegisteryEntries(Set<Registration> registeryEntries) {
-		this.registeryEntries = registeryEntries;
+	public void setRegistryEntries(Set<Registration> registryEntries) {
+		this.registryEntries = registryEntries;
 	}
 
 	public static long getSerialversionuid() {
