@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- USING BOOTSTRAP 4 -->
+    <!-- Meta -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="index.js"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+    <title>Registeration</title>
+
+    <link rel="stylesheet" href="./style.css" />
+    <script src="script.js"></script>
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+            <a class="navbar-brand" href="#">
+                <img src="./img/black_panther.png" alt="Logo" height="50px" />
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+
+                    <!-- Home Page -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="./index.html">Home</a>
+                    </li>
+
+                    <!-- Registration -->
+                    <li class="nav-item">
+                        <a class="nav-link active" href="./registration.html">Registration</a>
+                    </li>
+
+                </ul>
+                <form class="form-inline my-2 my-lg-0" id="search-form">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
+                        id="search-term" />
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+    </header>
+
+    <section id="">
+        <h4 class="list-products text-center">List of Products:</h4>
+        <div class="container">
+            <div class="row">
+
+                <div class="card col" style="width: 25rem;">
+                    <!-- <img src="" class="card-img-top" alt="..." id="img1" /> -->
+                    <div class="card-body">
+                        <h5 class="card-title" id="name1">COURSE 1</h5>
+                        <p class="card-text" id="desc1">
+                            Buy This! Price:
+                            <span class="price ml-2" id="price1">$300</span>
+                        </p>
+                        <a href="#" class="btn btn-primary" id="btn1">Add To Cart</a>
+                    </div>
+                </div>
+
+                <div class="card col" style="width: 25rem;">
+                    <!-- <img src="" class="card-img-top" alt="..." id="img2" /> -->
+                    <div class="card-body">
+                        <h5 class="card-title" id="name2">COURSE 2</h5>
+                        <p class="card-text" id="desc2">
+                            Buy This! Price:
+                            <span class="price ml-2" id="price2">$200</span>
+                        </p>
+                        <a href="#" class="btn btn-primary" id="btn2">Add To Cart</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <div>
+        <section class="cart-title">
+            <svg class="bi bi-cart" width="50px" height="50px" viewBox="0 0 16 16" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                    d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+            </svg>
+            <h4>Cart:</h4>
+            <article>
+                <h5 id="price-total"></h5>
+                <h5 id="item-num"></h5>
+            </article>
+        </section>
+        <ul id="cart-list"></ul>
+    </div>
+
+    <script>
+        const searchForm = document.getElementById('search-form')
+        const searchTerm = document.getElementById('search-term')
+        const cards = document.getElementById('cards')
+        const product1Button = document.getElementById('btn1')
+        const product2Button = document.getElementById('btn2')
+        const productsEls = document.querySelectorAll('.card-title')
+
+        let cart = []
+        let priceTotal = 0
+
+        product1Button.addEventListener('click', handleBtn1Click)
+        product2Button.addEventListener('click', handleBtn2Click)
+        searchForm.addEventListener('submit', (e) => {
+            e.preventDefault()
+            const currentInput = searchTerm.value.toLowerCase()
+            for (let product of productsEls) {
+                if (!product.innerHTML.toLowerCase().includes(currentInput)) {
+                    product.parentElement.parentElement.style.display = 'none'
+                }
+            }
+        })
+        searchTerm.addEventListener('click', () => {
+            searchTerm.value = ''
+            const productEls = document.querySelectorAll('.card-title')
+            for (let product of productEls) {
+                product.parentElement.parentElement.style.display = 'block'
+            }
+        })
+
+        function handleBtn1Click(e) {
+            let product = {
+                id: Date.now(),
+                name: document.getElementById('name1').textContent,
+                description: document.getElementById('desc1').textContent,
+                price: document.getElementById('price1').textContent,
+                // image: document.getElementById('img1').src,
+            }
+            cart.push(product)
+
+            console.warn('added', { cart })
+            getTotalPrice(product)
+            writeCartItem(product)
+
+        }
+
+        function handleBtn2Click(e) {
+            let product = {
+                id: Date.now(),
+                name: document.getElementById('name2').textContent,
+                description: document.getElementById('desc2').textContent,
+                price: document.getElementById('price2').textContent,
+                // image: document.getElementById('img2').src,
+            }
+
+            cart.push(product)
+            console.warn('added', { cart })
+            getTotalPrice(product)
+            writeCartItem(product)
+        }
+
+        function writeCartItem(product) {
+            let cartList = document.getElementById('cart-list')
+            let li = document.createElement('li')
+            li.innerHTML = `<h6>Product: ${product.name}</h6><p>Description: ${product.description}</p>`
+            cartList.appendChild(li)
+            document.getElementById('item-num').textContent = `Number of Items: ${cart.length.toString()}`
+
+            let remove = document.createElement('button')
+            remove.innerHTML = 'Remove'
+            remove.addEventListener('click', () => {
+                cartList.removeChild(li)
+                removePriceFromTotal(product)
+                cart.pop(product)
+
+                document.getElementById('item-num').textContent = `Number of Items: ${cart.length.toString()}`
+
+            })
+            li.append(remove)
+
+        }
+
+        function getTotalPrice(product) {
+
+
+            let numPrice = Number(product.price.slice(1)) * 100
+            console.log(numPrice)
+            priceTotal = priceTotal * 100
+            priceTotal += numPrice
+            priceTotal = priceTotal / 100
+
+            console.log(priceTotal)
+            document.getElementById(
+                'price-total'
+            ).textContent = `Total Price: ${'$'.concat(priceTotal.toFixed(2).toString())}`
+        }
+
+
+        function removePriceFromTotal(product) {
+            if (cart.length === 0) {
+                priceTotal = 0
+            } else {
+                let numPrice = Number(product.price.slice(1)) * 100
+                priceTotal = priceTotal * 100
+                priceTotal -= numPrice
+                priceTotal = priceTotal / 100
+                document.getElementById(
+                    'price-total'
+                ).textContent = `Total Price: ${'$'.concat(priceTotal.toFixed(2).toString())}`
+            }
+        }
+    </script>
+
+</body>
+
+</html>
