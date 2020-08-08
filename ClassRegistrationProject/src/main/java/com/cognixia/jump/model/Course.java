@@ -29,7 +29,7 @@ public class Course implements Serializable{
 	private String department;
 	private int noCredits;
 	@OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<Registration> registeryEntries = new HashSet<Registration>();
+	private Set<Registration> registryEntries = new HashSet<Registration>();
 
 	public Course() {
 		this(-1L, "N/A", "N/A", 0);
@@ -75,12 +75,12 @@ public class Course implements Serializable{
 		this.noCredits = noCredits;
 	}
 
-	public Set<Registration> getRegisteryEntries() {
-		return registeryEntries;
+	public Set<Registration> getRegistryEntries() {
+		return registryEntries;
 	}
 
-	public void setRegisteryEntries(Set<Registration> registeryEntries) {
-		this.registeryEntries = registeryEntries;
+	public void setRegistryEntries(Set<Registration> registryEntries) {
+		this.registryEntries = registryEntries;
 	}
 
 	public static long getSerialversionuid() {
