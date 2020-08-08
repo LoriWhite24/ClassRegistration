@@ -1,25 +1,36 @@
 package com.cognixia.jump.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "student")
 public class Student implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id 
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "student_id", unique = true, nullable = false)
 	private Long id;
-	
 	private String email;
 	private String username;
 	private String password;
 	private int creditHours;
+	@OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Registration> registeryEntries = new HashSet<Registration>();
 
 	public Student() {
 		this(-1L, "N/A", "N/A", "N/A", 0);
@@ -74,6 +85,14 @@ public class Student implements Serializable{
 		this.creditHours = creditHours;
 	}
 
+	public Set<Registration> getRegisteryEntries() {
+		return registeryEntries;
+	}
+
+	public void setRegisteryEntries(Set<Registration> registeryEntries) {
+		this.registeryEntries = registeryEntries;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -84,4 +103,18 @@ public class Student implements Serializable{
 				+ ", creditHours=" + creditHours + "]";
 	}
 	
+	@Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (id == null || obj == null || getClass() != obj.getClass())
+            return false;
+        Student toCompare = (Student) obj;
+        return id.equals(toCompare.id);
+    }
+	
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }
