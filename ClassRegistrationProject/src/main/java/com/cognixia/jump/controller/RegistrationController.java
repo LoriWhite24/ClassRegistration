@@ -37,6 +37,7 @@ public class RegistrationController {
 	}
 	/**
 	 * Retrieves all the registry entries associated with the student.
+	 * @author Lori White
 	 * @param student the student to search for
 	 * @return List - the list of registry entries 
 	 */
