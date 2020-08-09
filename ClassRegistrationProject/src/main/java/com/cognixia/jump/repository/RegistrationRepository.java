@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.cognixia.jump.model.Registration;
+import com.cognixia.jump.model.Student;
 
 /**
  * The Repository for Registration.
@@ -16,4 +17,6 @@ import com.cognixia.jump.model.Registration;
 public interface RegistrationRepository extends JpaRepository<Registration, Long>{
 	//added by Lori White
 	List<Registration> findAll();
+	//added by Lori White
+	List<Registration> findByStudentContaining(Student student);
 }
