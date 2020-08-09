@@ -16,4 +16,6 @@ import com.cognixia.jump.model.Course;
 public interface CourseRepository extends JpaRepository<Course, Long>{
 	//added by Lori White
 	List<Course> findByDepartmentContaining(String department);
+	//added by Lori White
+	List<Course> findByNameContaining(String name);
 }

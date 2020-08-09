@@ -59,4 +59,14 @@ public class CourseController {
 	public List<Course> getCoursesByDepartment(@PathVariable String department) {
 		return service.findByDepartmentContaining(department);
 	}
+	/**
+	 * Retrieves the course with the name that was searched for.
+	 * @author Lori White
+	 * @param name the name of the course to search for
+	 * @return Course - the course that was found
+	 */
+	@GetMapping("/courses/name/{name}")
+	public List<Course> getCourseByName(@PathVariable String name) {
+		return service.findByNameContaining(name);
+	}
 }
