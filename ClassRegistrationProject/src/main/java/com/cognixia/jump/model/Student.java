@@ -32,18 +32,23 @@ public class Student implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "student_id", unique = true, nullable = false)
 	private Long id;
+	
 	@NotBlank
 	@Pattern(regexp = "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$")
 	@Column(unique = true)
 	private String email;
+	
 	@NotBlank
 	@Pattern(regexp = "^[aA-zZ]\\\\w{5, 29}$")
 	private String username;
+	
 	@NotBlank
 	@Pattern(regexp = "^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$")
 	private String password;
-	@Column(columnDefinition = "default 0")
+	
+	//@Column(columnDefinition = "default 0")
 	private Integer creditHours;
+	
 	@OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Registration> registryEntries = new HashSet<Registration>();
 
