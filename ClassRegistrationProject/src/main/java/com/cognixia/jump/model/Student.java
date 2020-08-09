@@ -23,27 +23,32 @@ import javax.validation.constraints.Pattern;
  * @version v2 (08/08/2020)
  */
 @Entity
-@Table(name = "student")
+@Table(name = "student") // you don't need this annotation unless you want the table name diff from class name -TK
 public class Student implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "student_id", unique = true, nullable = false)
+	@Column(name = "student_id" /*, unique = true, nullable = false*/) // you don't need these constraints - they are done automatically -TK
 	private Long id;
+	
 	@NotBlank
-	@Pattern(regexp = "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$")
+	//@Pattern(regexp = "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$")
 	@Column(unique = true)
 	private String email;
+	
 	@NotBlank
-	@Pattern(regexp = "^[aA-zZ]\\\\w{5, 29}$")
+	//@Pattern(regexp = "^[aA-zZ]\\\\w{5, 29}$")
 	private String username;
+	
 	@NotBlank
-	@Pattern(regexp = "^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$")
+	//@Pattern(regexp = "^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$")
 	private String password;
-	@Column(columnDefinition = "default 0")
+	
+	//@Column(columnDefinition = "default 0")
 	private Integer creditHours;
+	
 	@OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Registration> registryEntries = new HashSet<Registration>();
 
@@ -62,7 +67,8 @@ public class Student implements Serializable{
 	 * @param password the student's password
 	 * @param creditHours the number of credit hours the student is registered for 
 	 */
-	public Student(@NotBlank @Pattern(regexp = "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$") String email, @NotBlank @Pattern(regexp = "^[aA-zZ]\\\\w{5, 29}$") String username, @NotBlank @Pattern(regexp = "^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$") String password, Integer creditHours) {
+	public Student(@NotBlank /*@Pattern(regexp = "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$")*/ String email, 
+					@NotBlank /*@Pattern(regexp = "^[aA-zZ]\\\\w{5, 29}$")*/ String username, @NotBlank /*@Pattern(regexp = "^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$")*/ String password, Integer creditHours) {
 		super();
 		this.email = email;
 		this.username = username;

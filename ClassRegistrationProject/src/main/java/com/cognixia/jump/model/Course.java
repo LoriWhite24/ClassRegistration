@@ -35,7 +35,7 @@ public class Course implements Serializable{
 	private String name;
 	@NotBlank
 	private String department;
-	@Column(columnDefinition = "default 3")
+	//@Column(columnDefinition = "default 3")
 	private Integer noCredits;
 	@OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Registration> registryEntries = new HashSet<Registration>();
