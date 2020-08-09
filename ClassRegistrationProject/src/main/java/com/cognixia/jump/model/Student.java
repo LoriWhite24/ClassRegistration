@@ -17,20 +17,22 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /**
  * The model for Student.
  * @author Lori White and Tara Kelly
  * @version v2 (08/08/2020)
  */
 @Entity
-@Table(name = "student") // you don't need this annotation unless you want the table name diff from class name -TK
+@Table(name = "student") 
 public class Student implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "student_id" /*, unique = true, nullable = false*/) // you don't need these constraints - they are done automatically -TK
+	@Column(name = "student_id") 
 	private Long id;
 	
 	@NotBlank
@@ -46,9 +48,9 @@ public class Student implements Serializable{
 	//@Pattern(regexp = "^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$")
 	private String password;
 	
-	//@Column(columnDefinition = "default 0")
+	@Column(columnDefinition = "int default 0")
 	private Integer creditHours;
-	
+	@JsonManagedReference
 	@OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Registration> registryEntries = new HashSet<Registration>();
 
