@@ -12,18 +12,32 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cognixia.jump.model.Course;
 import com.cognixia.jump.repository.CourseRepository;
 
+/**
+ * The controller for the Courses. 
+ * @author Lori White and Tara Kelly
+ * @version v2 (08/08/2020)
+ */
 @RequestMapping("/api")
 @RestController
 public class CourseController {
 
 	@Autowired
 	CourseRepository service;
-
+	/**
+	 * Retrieves all the courses in the database.
+	 * @author Tara Kelly
+	 * @return List - the courses in the database.
+	 */
 	@GetMapping("/courses")
 	public List<Course> getAllCourses() {
 		return service.findAll();
 	}
-
+	/**
+	 * Retrieves a course pertaining to an id.
+	 * @author Tara Kelly
+	 * @param id the course id to search for
+	 * @return Course - the course pertaining to the id
+	 */
 	@GetMapping("/courses/{id}")
 	public Course getCourse(@PathVariable long id) {
 
@@ -34,5 +48,15 @@ public class CourseController {
 		}
 
 		return new Course();
+	}
+	/**
+	 * Retrieves a list of courses that are within the specified department.
+	 * @author Lori White
+	 * @param department the department name to search for
+	 * @return List - the list of courses that are in the department specified
+	 */
+	@GetMapping("/courses/department/{department}")
+	public List<Course> getCoursesByDepartment(@PathVariable String department) {
+		return service.findByDepartmentContaining(department);
 	}
 }
