@@ -16,8 +16,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 /**
  * The model for Course.
  * @author Lori White and Tara Kelly
@@ -39,7 +37,6 @@ public class Course implements Serializable{
 	private String department;
 	@Column(columnDefinition = "int default 3")
 	private Integer noCredits;
-	@JsonManagedReference
 	@OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Registration> registryEntries = new HashSet<Registration>();
 	

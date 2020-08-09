@@ -16,8 +16,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * The model for Registration.
@@ -39,11 +39,11 @@ public class Registration implements Serializable{
 	private Date registrationDate;
 	@Column(columnDefinition = "tinyint(1) default false")
 	private Boolean hasWithdrawn;
-	@JsonBackReference
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY, optional = false, targetEntity = Student.class)
 	@JoinColumn(name = "student_id", nullable = false)
 	private Student student;
-	@JsonBackReference
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY, optional = false, targetEntity = Course.class)
 	@JoinColumn(name = "course_id", nullable = false)
 	private Course course;

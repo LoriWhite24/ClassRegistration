@@ -17,8 +17,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 /**
  * The model for Student.
  * @author Lori White and Tara Kelly
@@ -50,7 +48,6 @@ public class Student implements Serializable{
 	
 	@Column(columnDefinition = "int default 0")
 	private Integer creditHours;
-	@JsonManagedReference
 	@OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Registration> registryEntries = new HashSet<Registration>();
 
