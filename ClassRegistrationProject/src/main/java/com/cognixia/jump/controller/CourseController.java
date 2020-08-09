@@ -3,13 +3,19 @@ package com.cognixia.jump.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cognixia.jump.model.Course;
+import com.cognixia.jump.model.Student;
 import com.cognixia.jump.repository.CourseRepository;
 
 /**
@@ -49,6 +55,24 @@ public class CourseController {
 
 		return new Course();
 	}
+	
+	/**
+	 * Adds a course to DB.
+	 * @author Tara Kelly
+	 * @param the new Course
+	 * @return ResponseEntity whether or not course was inserted correctly
+	 */
+	
+	@PostMapping("/add/course")
+	public ResponseEntity<String> addCourse(@Valid @RequestBody Course newCourse) {
+		if(service.existsById(newCourse.getId())) {
+			return ResponseEntity.status(400).body("Course with id = " + newCourse.getId() + " already exists.");
+		} else {
+			Course created = service.save(newCourse);
+			return ResponseEntity.status(201).body("Created: " + created);
+		}
+	}
+
 	/**
 	 * Retrieves a list of courses that are within the specified department.
 	 * @author Lori White
