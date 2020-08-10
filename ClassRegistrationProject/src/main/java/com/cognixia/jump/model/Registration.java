@@ -17,7 +17,8 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 /**
  * The model for Registration.
@@ -39,12 +40,12 @@ public class Registration implements Serializable{
 	private Date registrationDate;
 	@Column(columnDefinition = "tinyint(1) default false")
 	private Boolean hasWithdrawn;
-	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY, optional = false, targetEntity = Student.class)
+	@JsonProperty(access = Access.WRITE_ONLY)
+	@ManyToOne(fetch = FetchType.LAZY, optional = true, targetEntity = Student.class)
 	@JoinColumn(name = "student_id", nullable = false)
 	private Student student;
-	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY, optional = false, targetEntity = Course.class)
+	@JsonProperty(access = Access.WRITE_ONLY)
+	@ManyToOne(fetch = FetchType.LAZY, optional = true, targetEntity = Course.class)
 	@JoinColumn(name = "course_id", nullable = false)
 	private Course course;
 	
