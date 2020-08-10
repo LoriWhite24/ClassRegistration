@@ -50,8 +50,8 @@ public class StudentController {
 //	
 	/**
 	 * Creates a student.
-	 * @author Lori White
-	 * @param student the student to add to teh database
+	 * @author Tara Kelly
+	 * @param newStudent the student to add to the database
 	 * @return ResponseEntity - whether the student was added or not
 	 */
 	@PostMapping("/add/student")
