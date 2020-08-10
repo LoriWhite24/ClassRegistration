@@ -13,13 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cognixia.jump.model.Registration;
-import com.cognixia.jump.model.Student;
 import com.cognixia.jump.repository.RegistrationRepository;
 
 /**
  * The controller for Registration.
  * @author Lori White
- * @version v2 (08/08/2020)
+ * @version v3 (08/09/2020)
  */
 @RequestMapping("/api")
 @RestController
@@ -34,16 +33,6 @@ public class RegistrationController {
 	@GetMapping("/registration")
 	public List<Registration> getAllRegistryEntries() {
 		return service.findAll();
-	}
-	/**
-	 * Retrieves all the registry entries associated with the student.
-	 * @author Lori White
-	 * @param student the student to search for
-	 * @return List - the list of registry entries 
-	 */
-	@GetMapping("/registration/student")
-	public List<Registration> getAllRegistryEntriesByStudent(@RequestBody Student student) {
-		return service.findByStudentContaining(student);
 	}
 	/**
 	 * Adds a registry entry to the database.
