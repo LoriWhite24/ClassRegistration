@@ -8,7 +8,9 @@ function getCourses(url){
     xhttpList.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
             // TODO: hook up to webpage
-            //renderCourseList(this.responseText);  // this is an example- depends on how Thien handles display
+            //renderCourseList(this.responseText);
+              // this is an example- depends on how Thien handles display
+              console.log(this.responseText);
         }
     };
     xhttpList.open("GET", url, true);
@@ -53,6 +55,19 @@ function getCourseByName(name){
 }
 
 // AJAX calls for Registrations
+function getAllRegistrations(){
+
+    var xhttpList = new XMLHttpRequest();
+
+    xhttpList.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+           console.log(this.responseText);
+        }
+    };
+    xhttpList.open("GET", "/api/registration", true);
+    xhttpList.send();
+    console.log("Registrations received");  
+}
 function addRegistration(){
 
     // TODO: need to pull send data from interface - student id and course id, etc.
