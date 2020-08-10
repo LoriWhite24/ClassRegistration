@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+//import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,6 +52,14 @@ public class StudentController {
 	 * @return ResponseEntity whether or not student was inserted correctly
 	 */
 	
+//	@PutMapping("/update/student")
+//	
+	/**
+	 * Creates a student.
+	 * @author Tara Kelly
+	 * @param newStudent the student to add to the database
+	 * @return ResponseEntity - whether the student was added or not
+	 */
 	@PostMapping("/add/student")
 	public ResponseEntity<String> addStudent(@Valid @RequestBody Student newStudent) {
 		if(service.existsById(newStudent.getId())) {
