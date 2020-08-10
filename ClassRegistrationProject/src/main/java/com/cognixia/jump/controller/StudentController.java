@@ -45,6 +45,12 @@ public class StudentController {
 
 		return new Student();
 	}
+	/**
+	 * Adds a student to DB.
+	 * @author Tara Kelly
+	 * @param the new Student
+	 * @return ResponseEntity whether or not student was inserted correctly
+	 */
 	
 //	@PutMapping("/update/student")
 //	
@@ -57,7 +63,7 @@ public class StudentController {
 	@PostMapping("/add/student")
 	public ResponseEntity<String> addStudent(@Valid @RequestBody Student newStudent) {
 		if(service.existsById(newStudent.getId())) {
-			return ResponseEntity.status(400).body("Account with id = " + newStudent.getId() + " already exists.");
+			return ResponseEntity.status(400).body("Student with id = " + newStudent.getId() + " already exists.");
 		} else {
 			Student created = service.save(newStudent);
 			return ResponseEntity.status(201).body("Created: " + created);
