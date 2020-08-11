@@ -18,7 +18,7 @@ import com.cognixia.jump.repository.RegistrationRepository;
 /**
  * The controller for Registration.
  * @author Lori White
- * @version v3 (08/09/2020)
+ * @version v4 (08/10/2020)
  */
 @RequestMapping("/api")
 @RestController

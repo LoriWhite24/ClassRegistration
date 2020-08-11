@@ -5,20 +5,15 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 /**
  * The model for Registration.
@@ -40,21 +35,17 @@ public class Registration implements Serializable{
 	private Date registrationDate;
 	@Column(columnDefinition = "tinyint(1) default false")
 	private Boolean hasWithdrawn;
-	@JsonProperty(access = Access.WRITE_ONLY)
-	@ManyToOne(fetch = FetchType.LAZY, optional = true, targetEntity = Student.class)
-	@JoinColumn(name = "student_id", nullable = false)
-	private Student student;
-	@JsonProperty(access = Access.WRITE_ONLY)
-	@ManyToOne(fetch = FetchType.LAZY, optional = true, targetEntity = Course.class)
-	@JoinColumn(name = "course_id", nullable = false)
-	private Course course;
+	@NotNull
+	private Integer studentId;
+	@NotNull
+	private Integer courseId;
 	
 	/**
 	 * The default constructor.
 	 * @author Lori White
 	 */
 	public Registration() {
-		this(new Date(), false, new Student(), new Course());
+		this(new Date(), false, 0, 0);
 	}
 	/**
 	 * The overloaded constructor.
@@ -64,12 +55,12 @@ public class Registration implements Serializable{
 	 * @param student the student that registered for the course
 	 * @param course the course the student registered for
 	 */
-	public Registration(@NotNull Date registrationDate, Boolean hasWithdrawn, Student student, Course course) {
+	public Registration(@NotNull Date registrationDate, Boolean hasWithdrawn, @NotNull Integer studentId, @NotNull Integer courseId) {
 		super();
 		this.registrationDate = registrationDate;
 		this.hasWithdrawn = hasWithdrawn;
-		this.student = student;
-		this.course = course;
+		this.studentId = studentId;
+		this.courseId = courseId;
 	}
 	/**
 	 * Retrieves the registry entry id.
@@ -114,34 +105,34 @@ public class Registration implements Serializable{
 	/**
 	 * Retrieves the student that registered for the course.
 	 * @author Lori White
-	 * @return Student - the student that registered for the course
+	 * @return Integer - the student that registered for the course
 	 */
-	public Student getStudent() {
-		return student;
+	public Integer getStudent() {
+		return studentId;
 	}
 	/**
 	 * Updates the student that registered for the course.
 	 * @author Lori White
-	 * @param student the student that registered for the course
+	 * @param studentId the student that registered for the course
 	 */
-	public void setStudent(Student student) {
-		this.student = student;
+	public void setStudent(Integer studentId) {
+		this.studentId = studentId;
 	}
 	/**
 	 * Retrieves the course the student registered for.
 	 * @author Lori White
-	 * @return Course - the course the student registered for
+	 * @return Integer - the course the student registered for
 	 */
-	public Course getCourse() {
-		return course;
+	public Integer getCourse() {
+		return courseId;
 	}
 	/**
 	 * Updates the course the student registered for.
 	 * @author Lori White
-	 * @param course the course the student registered for
+	 * @param courseId the course the student registered for
 	 */
-	public void setCourse(Course course) {
-		this.course = course;
+	public void setCourse(Integer courseId) {
+		this.courseId = courseId;
 	}
 	/**
 	 * Retrieves the serial version UID for this class.
@@ -159,6 +150,6 @@ public class Registration implements Serializable{
 	@Override
 	public String toString() {
 		return "Registration [id=" + id + ", registrationDate=" + registrationDate + ", hasWithdrawn=" + hasWithdrawn
-				+ ", student=" + student + ", course=" + course + "]";
+				+ ", student=" + studentId + ", course=" + courseId + "]";
 	}
 }
