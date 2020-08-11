@@ -1,3 +1,9 @@
+/*********
+AJAX call functions
+Author: Tara Kelly
+Provide logic for retrieving needed data from our API's
+***********/
+
 function validateLogin(){
     //TODO: implement
     // something like this:
@@ -38,15 +44,13 @@ function getCourses(url){
 
     xhttpList.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
-            // TODO: hook up to webpage
-            //renderCourseList(this.responseText);
-              // this is an example- depends on how Thien handles display
-              console.log(this.responseText);
+            sessionStorage.setItem("courses", this.responseText);
         }
     };
+
     xhttpList.open("GET", url, true);
     xhttpList.send();
-    console.log("Courses received");  
+    return sessionStorage.getItem("courses");
 }
 
 // may or may not need this function - this was for updating
@@ -126,4 +130,34 @@ function sendPostRegistration(sendData){
         }
     };
     xhttp.send(JSON.stringify(sendData));
+}
+
+/***********
+Render HTML functions
+Author: Tara Kelly
+Rendering portions of HTML with data from our database
+***********/
+
+function renderCourseTableRows(){
+
+    let courseList = getCourses("/api/courses/");
+    let jsonArray = JSON.parse(courseList);
+
+    let rows = "";
+    // the last cell in each table row will be a Register button
+    // the id of the button will be "register-" + the id of the course, i.e. "register-1"
+    // we can then pull the course id when someone clicks the Register button
+    jsonArray.forEach(json => {
+        rows +=
+        `<tr>
+            <td>${json.id}</td>
+            <td>${json.department}</td>
+            <td>${json.name}</td>
+            <td>${json.noCredits}</td>
+            <td><button id="register-${json.id}">Register</button></td>
+        </tr>`;
+    });
+ 
+    document.getElementById("courseTable").innerHTML = rows;
+
 }
