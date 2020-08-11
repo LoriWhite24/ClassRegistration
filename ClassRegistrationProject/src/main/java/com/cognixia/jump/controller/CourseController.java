@@ -15,13 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cognixia.jump.model.Course;
-import com.cognixia.jump.model.Student;
 import com.cognixia.jump.repository.CourseRepository;
 
 /**
  * The controller for the Courses. 
  * @author Lori White and Tara Kelly
- * @version v2 (08/08/2020)
+ * @version v3 (08/10/2020)
  */
 @RequestMapping("/api")
 @RestController
@@ -55,14 +54,12 @@ public class CourseController {
 
 		return new Course();
 	}
-	
 	/**
 	 * Adds a course to DB.
 	 * @author Tara Kelly
 	 * @param the new Course
 	 * @return ResponseEntity whether or not course was inserted correctly
 	 */
-	
 	@PostMapping("/add/course")
 	public ResponseEntity<String> addCourse(@Valid @RequestBody Course newCourse) {
 		if(service.existsById(newCourse.getId())) {
@@ -72,7 +69,6 @@ public class CourseController {
 			return ResponseEntity.status(201).body("Created: " + created);
 		}
 	}
-
 	/**
 	 * Retrieves a list of courses that are within the specified department.
 	 * @author Lori White

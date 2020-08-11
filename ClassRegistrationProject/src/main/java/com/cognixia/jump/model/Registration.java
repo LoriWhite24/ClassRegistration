@@ -52,8 +52,8 @@ public class Registration implements Serializable{
 	 * @author Lori White
 	 * @param registrationDate the date the student has signed up for the course
 	 * @param hasWithdrawn whether the student has withdrawn from the course that they have registered for
-	 * @param student the student that registered for the course
-	 * @param course the course the student registered for
+	 * @param studentId the student id of the student that registered for the course
+	 * @param courseId the course id of the course the student registered for
 	 */
 	public Registration(@NotNull Date registrationDate, Boolean hasWithdrawn, @NotNull Long studentId, @NotNull Long courseId) {
 		super();
