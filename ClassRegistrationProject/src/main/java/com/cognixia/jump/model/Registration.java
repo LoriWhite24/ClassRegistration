@@ -107,7 +107,7 @@ public class Registration implements Serializable{
 	 * @author Lori White
 	 * @return Long - the student that registered for the course
 	 */
-	public Long getStudent() {
+	public Long getStudentId() {
 		return studentId;
 	}
 	/**
@@ -115,7 +115,7 @@ public class Registration implements Serializable{
 	 * @author Lori White
 	 * @param studentId the student that registered for the course
 	 */
-	public void setStudent(Long studentId) {
+	public void setStudentId(Long studentId) {
 		this.studentId = studentId;
 	}
 	/**
@@ -123,7 +123,7 @@ public class Registration implements Serializable{
 	 * @author Lori White
 	 * @return Long - the course the student registered for
 	 */
-	public Long getCourse() {
+	public Long getCourseId() {
 		return courseId;
 	}
 	/**
@@ -131,7 +131,7 @@ public class Registration implements Serializable{
 	 * @author Lori White
 	 * @param courseId the course the student registered for
 	 */
-	public void setCourse(Long courseId) {
+	public void setCourseId(Long courseId) {
 		this.courseId = courseId;
 	}
 	/**
