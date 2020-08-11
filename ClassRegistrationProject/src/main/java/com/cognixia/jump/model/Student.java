@@ -13,8 +13,8 @@ import javax.validation.constraints.NotBlank;
 
 /**
  * The model for Student.
- * @author Tara Kelly
- * @version v3 (08/10/2020)
+ * @author Lori White and Tara Kelly
+ * @version v4 (08/10/2020)
  */
 @Entity
 @Table(name = "student") 
@@ -33,8 +33,10 @@ public class Student implements Serializable{
 	private String email;
 	
 	@NotBlank
-	//@Pattern(regexp = "^[aA-zZ]\\\\w{5, 29}$")
-	private String username;
+	private String firstName;
+	
+	@NotBlank
+	private String lastName;
 	
 	@NotBlank
 	//@Pattern(regexp = "^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$")
@@ -45,24 +47,26 @@ public class Student implements Serializable{
 
 	/**
 	 * The default constructor.
-	 * @author Tara Kelly
+	 * @author Lori White and Tara Kelly
 	 */
 	public Student() {
-		this("N/A", "N/A", "N/A", 0);
+		this("N/A", "N/A", "N/A", "N/A", 0);
 	}
 	/**
 	 * The overloaded constructor.
-	 * @author Tara Kelly
+	 * @author Lori White and Tara Kelly
 	 * @param email the student's email
-	 * @param username the student's user name
+	 * @param firstName the student's first name
+	 * @param lastName the student's last name
 	 * @param password the student's password
 	 * @param creditHours the number of credit hours the student is registered for 
 	 */
 	public Student(@NotBlank /*@Pattern(regexp = "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$")*/ String email, 
-					@NotBlank /*@Pattern(regexp = "^[aA-zZ]\\\\w{5, 29}$")*/ String username, @NotBlank /*@Pattern(regexp = "^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$")*/ String password, Integer creditHours) {
+					@NotBlank String firstName, @NotBlank String lastName,  @NotBlank /*@Pattern(regexp = "^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$")*/ String password, Integer creditHours) {
 		super();
 		this.email = email;
-		this.username = username;
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.password = password;
 		this.creditHours = creditHours;
 	}
@@ -91,20 +95,36 @@ public class Student implements Serializable{
 		this.email = email;
 	}
 	/**
-	 * Retrieves the student's user name.
-	 * @author Tara Kelly
-	 * @return String - the student's user name
+	 * Retrieves the student's first name.
+	 * @author Lori White
+	 * @return String - the student's first name
 	 */
-	public String getUsername() {
-		return username;
+	public String getFirstName() {
+		return firstName;
 	}
 	/**
-	 * Updates the student's user name.
-	 * @author Tara Kelly
-	 * @param username the student's user name
+	 * Updates the student's first name.
+	 * @author Lori White
+	 * @param firstName the student's first name
 	 */
-	public void setUsername(String username) {
-		this.username = username;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	/**
+	 * Retrieves the student's last name.
+	 * @author Lori White
+	 * @return String - the student's larst name
+	 */
+	public String getLastName() {
+		return lastName;
+	}
+	/**
+	 * Updates the student's last name.
+	 * @author Lori White
+	 * @param lastName the student's last name
+	 */
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 	/**
 	 * Retrieves the student's password.
@@ -148,12 +168,12 @@ public class Student implements Serializable{
 	}
 	/**
 	 * Creates a string representation of a student.
-	 * @author Tara Kelly
+	 * @author Lori White and Tara Kelly
 	 * @return String - a string representation of a student
 	 */
 	@Override
 	public String toString() {
-		return "Student [id=" + id + ", email=" + email + ", username=" + username + ", password=" + password
-				+ ", creditHours=" + creditHours + "]";
+		return "Student [id=" + id + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", password=" + password + ", creditHours=" + creditHours + "]";
 	}
 }
