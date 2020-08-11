@@ -3,20 +3,26 @@ package com.cognixia.jump.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.cognixia.jump.model.Registration;
-import com.cognixia.jump.model.Student;
 
 /**
  * The Repository for Registration.
  * @author Lori White
- * @version v1 (08/08/2020)
+ * @version v3 (08/10/2020)
  */
 @Repository
 public interface RegistrationRepository extends JpaRepository<Registration, Long>{
 	//added by Lori White
-	List<Registration> findAll();
+	List<Registration> findByStudentId(Long id);
 	//added by Lori White
-	List<Registration> findByStudentContaining(Student student);
+	List<Registration> findByCourseId(Long id);
+	//added by Lori White
+	@Query("select r from Registration r where r.studentId=?1 and r.courseId=?2")
+	Registration findByStudentIdandCourseId(Long studentId, Long courseId);
+	//added by Lori White
+	@Query("select case when count(r)> 0 then true else false end from Registration r where r.studentId=?1 and r.courseId=?2")
+	boolean existsByStudentIdandCourseId(Long studentId, Long courseId);
 }
