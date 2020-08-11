@@ -19,8 +19,8 @@ import com.cognixia.jump.repository.StudentRepository;
 
 /**
  * The controller for Students.
- * @author Tara Kelly
- * @version v1 (08/08/2020)
+ * @author Lori White and Tara Kelly
+ * @version v3 (08/10/2020)
  */
 @RestController
 @RequestMapping("/api")
@@ -46,16 +46,29 @@ public class StudentController {
 		return new Student();
 	}
 	/**
-	 * Adds a student to DB.
-	 * @author Tara Kelly
-	 * @param the new Student
-	 * @return ResponseEntity whether or not student was inserted correctly
+	 * Checks if the student entered the correct values to login.
+	 * @author Lori White
+	 * @param email the student's email to search for
+	 * @param password the student's password to compare
+	 * @return boolean - whether the login is valid or not
 	 */
-	
+	@GetMapping("/students/login/username/{email}/password/{password}")
+	public boolean validLogin(@PathVariable String email, @PathVariable String password) {
+		if(!service.existsByEmail(email)) {
+			return false;
+		} else {
+			Student student = service.findByEmail(email);
+			if(student.getPassword().equals(password)) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
 //	@PutMapping("/update/student")
 //	
 	/**
-	 * Creates a student.
+	 * Adds a student to DB.
 	 * @author Tara Kelly
 	 * @param newStudent the student to add to the database
 	 * @return ResponseEntity - whether the student was added or not

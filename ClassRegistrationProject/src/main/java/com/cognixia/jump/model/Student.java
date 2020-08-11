@@ -1,26 +1,20 @@
 package com.cognixia.jump.model;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
+//import javax.validation.constraints.Pattern;
 
 /**
  * The model for Student.
  * @author Lori White and Tara Kelly
- * @version v2 (08/08/2020)
+ * @version v4 (08/10/2020)
  */
 @Entity
 @Table(name = "student") 
@@ -39,8 +33,10 @@ public class Student implements Serializable{
 	private String email;
 	
 	@NotBlank
-	//@Pattern(regexp = "^[aA-zZ]\\\\w{5, 29}$")
-	private String username;
+	private String firstName;
+	
+	@NotBlank
+	private String lastName;
 	
 	@NotBlank
 	//@Pattern(regexp = "^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$")
@@ -48,30 +44,29 @@ public class Student implements Serializable{
 	
 	@Column(columnDefinition = "int default 0")
 	private Integer creditHours;
-	
-	@OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<Registration> registryEntries = new HashSet<Registration>();
 
 	/**
 	 * The default constructor.
-	 * @author Tara Kelly
+	 * @author Lori White and Tara Kelly
 	 */
 	public Student() {
-		this("N/A", "N/A", "N/A", 0);
+		this("N/A", "N/A", "N/A", "N/A", 0);
 	}
 	/**
 	 * The overloaded constructor.
-	 * @author Tara Kelly
+	 * @author Lori White and Tara Kelly
 	 * @param email the student's email
-	 * @param username the student's user name
+	 * @param firstName the student's first name
+	 * @param lastName the student's last name
 	 * @param password the student's password
 	 * @param creditHours the number of credit hours the student is registered for 
 	 */
 	public Student(@NotBlank /*@Pattern(regexp = "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$")*/ String email, 
-					@NotBlank /*@Pattern(regexp = "^[aA-zZ]\\\\w{5, 29}$")*/ String username, @NotBlank /*@Pattern(regexp = "^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$")*/ String password, Integer creditHours) {
+					@NotBlank String firstName, @NotBlank String lastName,  @NotBlank /*@Pattern(regexp = "^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$")*/ String password, Integer creditHours) {
 		super();
 		this.email = email;
-		this.username = username;
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.password = password;
 		this.creditHours = creditHours;
 	}
@@ -100,20 +95,36 @@ public class Student implements Serializable{
 		this.email = email;
 	}
 	/**
-	 * Retrieves the student's user name.
-	 * @author Tara Kelly
-	 * @return String - the student's user name
+	 * Retrieves the student's first name.
+	 * @author Lori White
+	 * @return String - the student's first name
 	 */
-	public String getUsername() {
-		return username;
+	public String getFirstName() {
+		return firstName;
 	}
 	/**
-	 * Updates the student's user name.
-	 * @author Tara Kelly
-	 * @param username the student's user name
+	 * Updates the student's first name.
+	 * @author Lori White
+	 * @param firstName the student's first name
 	 */
-	public void setUsername(String username) {
-		this.username = username;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	/**
+	 * Retrieves the student's last name.
+	 * @author Lori White
+	 * @return String - the student's larst name
+	 */
+	public String getLastName() {
+		return lastName;
+	}
+	/**
+	 * Updates the student's last name.
+	 * @author Lori White
+	 * @param lastName the student's last name
+	 */
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 	/**
 	 * Retrieves the student's password.
@@ -148,22 +159,6 @@ public class Student implements Serializable{
 		this.creditHours = creditHours;
 	}
 	/**
-	 * Retrieves the registry entries that are associated with this student.
-	 * @author Tara Kelly
-	 * @return Set - the registry entries that are associated with this student
-	 */
-	public Set<Registration> getRegistryEntries() {
-		return registryEntries;
-	}
-	/**
-	 * Updates the registry entries that are associated with this student.
-	 * @author Tara Kelly
-	 * @param registryEntries the registry entries that are associated with this student
-	 */
-	public void setRegistryEntries(Set<Registration> registryEntries) {
-		this.registryEntries = registryEntries;
-	}
-	/**
 	 * Retrieves the serial version UID for this class.
 	 * @author Tara Kelly
 	 * @return long - the serial version UID for this class
@@ -173,36 +168,12 @@ public class Student implements Serializable{
 	}
 	/**
 	 * Creates a string representation of a student.
-	 * @author Tara Kelly
+	 * @author Lori White and Tara Kelly
 	 * @return String - a string representation of a student
 	 */
 	@Override
 	public String toString() {
-		return "Student [id=" + id + ", email=" + email + ", username=" + username + ", password=" + password
-				+ ", creditHours=" + creditHours + "]";
+		return "Student [id=" + id + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", password=" + password + ", creditHours=" + creditHours + "]";
 	}
-	/**
-	 * Equals method for this class.
-	 * @author Lori White
-	 * @param obj the object to compare 
-	 * @return boolean - whether the Students are equal
-	 */
-	@Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (id == null || obj == null || getClass() != obj.getClass())
-            return false;
-        Student toCompare = (Student) obj;
-        return id.equals(toCompare.id);
-    }
-	/**
-	 * Creates a hash key for a student.
-	 * @author Lori White
-	 * @return int - the hash key value
-	 */
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

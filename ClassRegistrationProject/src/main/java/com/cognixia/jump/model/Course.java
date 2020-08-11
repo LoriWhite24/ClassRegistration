@@ -1,25 +1,19 @@
 package com.cognixia.jump.model;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 /**
  * The model for Course.
- * @author Lori White and Tara Kelly
- * @version v2 (08/08/2020)
+ * @author Tara Kelly
+ * @version v3 (08/10/2020)
  */
 @Entity
 @Table(name = "course")
@@ -37,8 +31,6 @@ public class Course implements Serializable{
 	private String department;
 	@Column(columnDefinition = "int default 3")
 	private Integer noCredits;
-	@OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<Registration> registryEntries = new HashSet<Registration>();
 	
 	/**
 	 * The default constructor.
@@ -117,22 +109,6 @@ public class Course implements Serializable{
 		this.noCredits = noCredits;
 	}
 	/**
-	 * Retrieves the registry entries that are associated with this course.
-	 * @author Tara Kelly
-	 * @return Set - the registry entries that are associated with this course
-	 */
-	public Set<Registration> getRegistryEntries() {
-		return registryEntries;
-	}
-	/**
-	 * Updates the registry entries that are associated with this course.
-	 * @author Tara Kelly
-	 * @param registryEntries the registry entries that are associated with this course
-	 */
-	public void setRegistryEntries(Set<Registration> registryEntries) {
-		this.registryEntries = registryEntries;
-	}
-	/**
 	 * Retrieves the serial version UID for this class.
 	 * @author Tara Kelly
 	 * @return long - the serial version UID for this class
@@ -149,28 +125,4 @@ public class Course implements Serializable{
 	public String toString() {
 		return "Course [id=" + id + ", name=" + name + ", department=" + department + ", noCredits=" + noCredits + "]";
 	}
-	/**
-	 * Equals method for this class.
-	 * @author Lori White
-	 * @param obj the object to compare 
-	 * @return boolean - whether the Courses are equal
-	 */
-	@Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (id == null || obj == null || getClass() != obj.getClass())
-            return false;
-        Course toCompare = (Course) obj;
-        return id.equals(toCompare.id);
-    }
-	/**
-	 * Creates a hash key for a course.
-	 * @author Lori White
-	 * @return int - the hash key value
-	 */
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

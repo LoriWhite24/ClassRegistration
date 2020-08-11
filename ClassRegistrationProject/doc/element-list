@@ -1,1 +1,4 @@
+com.cognixia.jump
 com.cognixia.jump.controller
+com.cognixia.jump.model
+com.cognixia.jump.repository
