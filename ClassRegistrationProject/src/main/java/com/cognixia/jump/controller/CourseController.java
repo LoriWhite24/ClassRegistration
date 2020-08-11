@@ -57,7 +57,7 @@ public class CourseController {
 	/**
 	 * Adds a course to DB.
 	 * @author Tara Kelly
-	 * @param the new Course
+	 * @param newCourse the new Course
 	 * @return ResponseEntity whether or not course was inserted correctly
 	 */
 	@PostMapping("/add/course")

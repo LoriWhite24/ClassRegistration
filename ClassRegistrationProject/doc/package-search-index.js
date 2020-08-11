@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"com.cognixia.jump.model"}]
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"com.cognixia.jump"},{"l":"com.cognixia.jump.controller"},{"l":"com.cognixia.jump.model"},{"l":"com.cognixia.jump.repository"}]
