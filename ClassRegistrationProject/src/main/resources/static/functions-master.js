@@ -1,3 +1,34 @@
+function validateLogin(){
+    //TODO: implement
+    // something like this:
+    // open a get request that will returns the student id if credentials are valid
+    // call getStudentById() and store student in a session
+    // can then pass student obj to other functions
+}
+
+//AJAX call for student using app (for now assume they are logged in)
+// for now this is for viewing how data looks in console
+function getStudentById(id){
+
+    var url = "/api/students/" + id;
+    var xhttpList = new XMLHttpRequest();
+    var student;
+
+    xhttpList.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            sessionStorage.setItem("student", this.responseText); // this code would depend on what this function is used for
+            console.log(this.responseText)
+        }
+    };
+    xhttpList.open("GET", url, false);
+    xhttpList.send();
+    console.log("Course received");  
+
+    return sessionStorage.getItem("student");
+
+}
+
+
 // AJAX calls for courses
 function getCourses(url){
 
@@ -32,9 +63,9 @@ function getCourseById(id){
     };
     xhttpList.open("GET", url, false);
     xhttpList.send();
-    console.log("Restaurant received");  
+    console.log("Course received");  
 
-    return sessionStorage.getItem("restaurant");
+    return sessionStorage.getItem("course");
 }
 
 function getCoursesByDepartment(dept){
