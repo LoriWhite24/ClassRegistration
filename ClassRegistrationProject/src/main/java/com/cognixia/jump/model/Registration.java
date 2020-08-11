@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 /**
  * The model for Registration.
  * @author Lori White
- * @version v1 (08/08/2020)
+ * @version v2 (08/10/2020)
  */
 @Entity
 @Table(name = "registration")
@@ -36,16 +36,16 @@ public class Registration implements Serializable{
 	@Column(columnDefinition = "tinyint(1) default false")
 	private Boolean hasWithdrawn;
 	@NotNull
-	private Integer studentId;
+	private Long studentId;
 	@NotNull
-	private Integer courseId;
+	private Long courseId;
 	
 	/**
 	 * The default constructor.
 	 * @author Lori White
 	 */
 	public Registration() {
-		this(new Date(), false, 0, 0);
+		this(new Date(), false, -1L, -1L);
 	}
 	/**
 	 * The overloaded constructor.
@@ -55,7 +55,7 @@ public class Registration implements Serializable{
 	 * @param student the student that registered for the course
 	 * @param course the course the student registered for
 	 */
-	public Registration(@NotNull Date registrationDate, Boolean hasWithdrawn, @NotNull Integer studentId, @NotNull Integer courseId) {
+	public Registration(@NotNull Date registrationDate, Boolean hasWithdrawn, @NotNull Long studentId, @NotNull Long courseId) {
 		super();
 		this.registrationDate = registrationDate;
 		this.hasWithdrawn = hasWithdrawn;
@@ -105,9 +105,9 @@ public class Registration implements Serializable{
 	/**
 	 * Retrieves the student that registered for the course.
 	 * @author Lori White
-	 * @return Integer - the student that registered for the course
+	 * @return Long - the student that registered for the course
 	 */
-	public Integer getStudent() {
+	public Long getStudent() {
 		return studentId;
 	}
 	/**
@@ -115,15 +115,15 @@ public class Registration implements Serializable{
 	 * @author Lori White
 	 * @param studentId the student that registered for the course
 	 */
-	public void setStudent(Integer studentId) {
+	public void setStudent(Long studentId) {
 		this.studentId = studentId;
 	}
 	/**
 	 * Retrieves the course the student registered for.
 	 * @author Lori White
-	 * @return Integer - the course the student registered for
+	 * @return Long - the course the student registered for
 	 */
-	public Integer getCourse() {
+	public Long getCourse() {
 		return courseId;
 	}
 	/**
@@ -131,7 +131,7 @@ public class Registration implements Serializable{
 	 * @author Lori White
 	 * @param courseId the course the student registered for
 	 */
-	public void setCourse(Integer courseId) {
+	public void setCourse(Long courseId) {
 		this.courseId = courseId;
 	}
 	/**
