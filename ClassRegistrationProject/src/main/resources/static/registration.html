@@ -40,48 +40,47 @@
     </script>
 </head>
 
-<body>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">
+            <img src="./images/black_panther.png" alt="Logo" height="50px" />
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
-            <a class="navbar-brand" href="#">
-                <img src="./img/black_panther.png" alt="Logo" height="50px" />
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
+                <!-- Home Page -->
+                <li class="nav-item">
+                    <a class="nav-link" href="./index.html">Home</a>
+                </li>
 
-                    <!-- Home Page -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="./index.html">Home</a>
-                    </li>
+                <!-- Registration -->
+                <li class="nav-item">
+                    <a class="nav-link active" href="./registration.html">Registration</a>
+                </li>
 
-                    <!-- Registration -->
-                    <li class="nav-item">
-                        <a class="nav-link active" href="./registration.html">Registration</a>
-                    </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0" id="search-form">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
+                    id="search-term" />
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+</header>
 
-                </ul>
-                <form class="form-inline my-2 my-lg-0" id="search-form">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
-                        id="search-term" />
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
-            </div>
-        </nav>
-    </header>
+<body class="containter-fluid bg-secondary" onload="initialize()">
 
-    <section id="">
+    <!-- <section id="">
         <h4 class="list-products text-center">List of Products:</h4>
         <div class="container">
             <div class="row">
 
                 <div class="card col" style="width: 25rem;">
-                    <!-- <img src="" class="card-img-top" alt="..." id="img1" /> -->
                     <div class="card-body">
                         <h5 class="card-title" id="name1">COURSE 1</h5>
                         <p class="card-text" id="desc1">
@@ -93,7 +92,6 @@
                 </div>
 
                 <div class="card col" style="width: 25rem;">
-                    <!-- <img src="" class="card-img-top" alt="..." id="img2" /> -->
                     <div class="card-body">
                         <h5 class="card-title" id="name2">COURSE 2</h5>
                         <p class="card-text" id="desc2">
@@ -106,9 +104,9 @@
 
             </div>
         </div>
-    </section>
+    </section> -->
 
-    <div>
+    <!-- <div>
         <section class="cart-title">
             <svg class="bi bi-cart" width="50px" height="50px" viewBox="0 0 16 16" fill="currentColor"
                 xmlns="http://www.w3.org/2000/svg">
@@ -122,7 +120,7 @@
             </article>
         </section>
         <ul id="cart-list"></ul>
-    </div>
+    </div> -->
 
     <script>
         const searchForm = document.getElementById('search-form')
@@ -236,6 +234,29 @@
             }
         }
     </script>
+
+    <div class="container">
+        <br>
+        <h1 class="title">Courses</h1>
+        <div style="float: right;margin-right: 20px;" id="modals"></div>
+        <br>
+        <br>
+        <table class="table table-hover size">
+            <thead>
+                <tr>
+                    <th>Course Name</th>
+                    <th>Department</th>
+                    <th>Rating</th>
+                    <th>Professor</th>
+                    <th>Semester</th>
+                    <th>Credit Hour</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="anime"></tbody>
+        </table>
+        <br><br>
+    </div>
 
 </body>
 
