@@ -21,10 +21,20 @@
     <link rel="stylesheet" href="./style.css" />
     <script src="functions-master.js"></script>
     <script>
-
+        // this is some test code for AJAX calls working properly
         window.addEventListener("load", function(){
-            getStudentById(1);
-            getAllRegistrations();
+            var student = getStudentById(1);
+            var json = JSON.parse(student);
+            //console.log(student);
+            console.log(json.id); // undefined - try parsing
+            var registrations = getRegistrationsForStudent(json.id);
+            let jsonArray = JSON.parse(registrations);
+            console.log(jsonArray);
+            for(var index = 0; index < jsonArray.length; index++){
+                console.log(jsonArray[index]);
+                let registration = jsonArray[index];
+                getCourseById(registration.courseId);
+            }
             getCourses("/api/courses/");
         });
     </script>
@@ -226,7 +236,7 @@
             }
         }
     </script>
-    
+
 </body>
 
 </html>

@@ -22,7 +22,7 @@ function getStudentById(id){
     };
     xhttpList.open("GET", url, false);
     xhttpList.send();
-    console.log("Course received");  
+    console.log("Student received");  
 
     return sessionStorage.getItem("student");
 
@@ -58,7 +58,8 @@ function getCourseById(id){
 
     xhttpList.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
-            //sessionStorage.setItem("course", this.responseText); // this code would depend on what this function is used for
+            sessionStorage.setItem("course", this.responseText); // this code would depend on what this function is used for
+            console.log(this.responseText);
         }
     };
     xhttpList.open("GET", url, false);
@@ -86,18 +87,22 @@ function getCourseByName(name){
 }
 
 // AJAX calls for Registrations
-function getAllRegistrations(){
+function getRegistrationsForStudent(id){
 
+    let url = "/api/registration/student/" + id;
     var xhttpList = new XMLHttpRequest();
 
     xhttpList.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
            console.log(this.responseText);
+           sessionStorage.setItem("registrations", this.responseText);
         }
     };
-    xhttpList.open("GET", "/api/registration", true);
+    xhttpList.open("GET", url, true);
     xhttpList.send();
-    console.log("Registrations received");  
+    console.log("Student's Registrations received");  
+    return sessionStorage.getItem("registrations");
+    
 }
 function addRegistration(){
 
