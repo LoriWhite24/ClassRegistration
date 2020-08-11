@@ -63,7 +63,7 @@ function getCourseById(id){
     xhttpList.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
             sessionStorage.setItem("course", this.responseText); // this code would depend on what this function is used for
-            console.log(this.responseText);
+            //console.log(this.responseText);
         }
     };
     xhttpList.open("GET", url, false);
@@ -159,5 +159,55 @@ function renderCourseTableRows(){
     });
  
     document.getElementById("courseTable").innerHTML = rows;
+
+}
+
+/******
+ * renders table rows of registered courses for a student
+ * (param) : id of student 
+ * uses student id to get list of registrations
+ * parses list of registrations to get each course object
+ * displays course object in a table row 
+ ******/
+function renderRegisteredCourses(studentId){
+
+    
+    let registrations = getRegistrationsForStudent(studentId);
+    let jsonArray = JSON.parse(registrations);
+
+    let rows = "";
+
+    for(var index = 0; index < jsonArray.length; index++){
+
+        let registration = jsonArray[index];
+        let course = getCourseById(registration.courseId);
+        let json = JSON.parse(course);
+
+        rows +=
+        `<tr>
+            <td>${json.id}</td>
+            <td>${json.department}</td>
+            <td>${json.name}</td>
+            <td>${json.noCredits}</td>
+            <td><button id="withdraw-${json.id}">Withdraw</button></td>
+        </tr>`;
+    }
+
+   
+    // just leaving this dup code for now since it's not much- will be more clear
+    // don't think we need registration id b/c of how Lori's API call works - just student id and course id
+    // ideally we will be able to store and access student id from anywhere within a given session
+    // jsonArray.forEach(json => {
+    //     rows +=
+    //     `<tr>
+    //         <td>${json.id}</td>
+    //         <td>${json.department}</td>
+    //         <td>${json.name}</td>
+    //         <td>${json.noCredits}</td>
+    //         <td><button id="withdraw-${json.id}">Withdraw</button></td>
+    //     </tr>`;
+    // });
+
+    document.getElementById("registeredCoursesTable").innerHTML = rows;
 
 }
