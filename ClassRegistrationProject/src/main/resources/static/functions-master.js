@@ -199,7 +199,7 @@ function renderCourseTableRows(){
             <td>${json.department}</td>
             <td>${json.name}</td>
             <td>${json.noCredits}</td>
-            <td><button id="register-${json.id}" onclick="addRegistration(${json.id})">Register</button></td>
+            <td><button class="btn btn-primary" id="register-${json.id}" onclick="addRegistration(${json.id})">Register</button></td>
         </tr>`;
     });
  
@@ -237,8 +237,8 @@ function renderRegisteredCourses(studentId){
             <td>${json.name}</td>
             <td>${json.noCredits}</td>
             <td>
-                <button id="withdraw-${json.id}" onclick="withdrawOrReEnroll(${registrationId}, ${json.id}, ${studentId}, true)">Withdraw</button>
-                <button id="reenroll-${json.id}" onclick="withdrawOrReEnroll(${registrationId}, ${json.id}, ${studentId}, false)">ReEnroll</button>
+                <button class="btn btn-primary" id="withdraw-${json.id}" onclick="withdrawOrReEnroll(${registrationId}, ${json.id}, ${studentId}, true)">Withdraw</button>
+                <button class="btn btn-danger" id="reenroll-${json.id}" onclick="withdrawOrReEnroll(${registrationId}, ${json.id}, ${studentId}, false)">ReEnroll</button>
             </td>
         </tr>`;
     }
