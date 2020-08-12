@@ -1,5 +1,135 @@
-.navbar a:hover, 
-.navbar a.current{
-    background: gray;
-    color: darkgray;
+* {
+    box-sizing:border-box
+}
+
+.homeBody {
+    margin: 0;
+    background-image: url("./images/kaneki-ken.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.tableBody {
+    margin: 0;
+    background-color: white;
+}
+
+.aboutBody {
+    margin: 0;
+    background-image: url("./images/cowboy.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* Hide the images by default */
+.mySlides {
+    display: none;
+}
+
+.nav {
+    background-image: linear-gradient(to right, black, red);
+}
+
+nav .navbar-nav li a{
+    color: white !important;
+}
+
+.homeText {
+    text-align: center;
+    font-style: italic;
+    color: red;
+    font-family: Impact, Charcoal, sans-serif;
+}
+
+.footerText2 {
+    font-style: italic;
+    color: black;
+    float: right;
+    font-family: Impact, Charcoal, sans-serif;
+    margin-right: 5px;
+}
+
+.link {
+    font-family: Impact, Charcoal, sans-serif;
+    font-size: larger;
+}
+
+.alignment {
+    float: right;
+}
+
+img {
+	vertical-align: middle;
+}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+footer {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+    width: 100%;
+    background-image: linear-gradient(to right, black, red);
+	font-style: italic;
+}
+
+.title {
+    text-align: center;
+    color: red;
+    text-decoration: underline;
+    font-family: Impact, Charcoal, sans-serif;
+}
+
+.desc {
+    width: 250px;
+}
+
+.tableImg {
+    width: 150px;
+    height: 150px;
+    border: 6px solid #343a40;
+}
+
+.slideImg {
+    width: 100%;
+    height: 50%;
+    border: 10px solid black;
+}
+
+th {
+    color: white;
+    font-family: Impact, Charcoal, sans-serif;
+    font-size: larger;
+}
+
+thead {
+    text-align: center;
+    background-image: linear-gradient(black, teal);
+}
+
+tbody {
+    text-align: center;
+}
+
+button {
+    width: 100px;
+}
+
+td {
+    width: 150px;
+    color: red;
+}
+
+.size {
+    width: 100%;
+}
+
+.aboutLink {
+    color: red;
+    background-color: black;
 }

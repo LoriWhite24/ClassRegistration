@@ -1,0 +1,143 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- JavaScript -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="index.js"></script>
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+  <title>Profile</title>
+  <link rel="stylesheet" href="./style.css" />
+  <script src="index.js"></script>
+</head>
+
+<body class="containter-fluid bg-secondary" onload="initialize()">
+  <!-- Navbar fixed on top of the page even when scrolling down -->
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="./index.html"><img src="./image/4 star dragon ball 2.png"
+        style="width: 50px; height: 50px;" />
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link" href="./index.html">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link active" href="./profile.html">Profile</a>
+        <!-- <a class="nav-link" href="#">Pricing</a>
+            <a
+              class="nav-link disabled"
+              href="#"
+              tabindex="-1"
+              aria-disabled="true"
+              >Disabled</a
+            > -->
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- <h2 class="d-flex justify-content-center text-center">Add new character</h2> -->
+  <!-- This div of id = modals is where all the modals can be written to.  Location of the Modal HTML itself does not matter in this case -->
+  <div id="modals" class="d-flex justify-content-center text-center" style="padding: 10px;"></div>
+  <!-- Page Content Below -->
+  <div id="pageLayout" class="d-flex justify-content-center text-center" style="padding: 10px;">
+    <!-- Cards Displayed on Left -->
+    <div id="fix-image-sizing" class="d-flex justify-content-center text-center" style="padding: 10px;">
+      <!-- The div with id=students is where we write all of our student cards dynamically with js -->
+      <div class="text-center" id="students">
+        <!-- <h2>Character Profile</h2> -->
+      </div>
+    </div>
+  </div>
+
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">
+        <img src="./image/black_panther.png" alt="Logo" height="50px" />
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+
+          <!-- Home Page -->
+          <li class="nav-item">
+            <a class="nav-link" href="./index.html">Home</a>
+          </li>
+
+          <!-- Registration -->
+          <li class="nav-item">
+            <a class="nav-link active" href="./registration.html">Registration</a>
+          </li>
+
+        </ul>
+        <form class="form-inline my-2 my-lg-0" id="search-form">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="search-term" />
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+  </header>
+
+  <section id="">
+    <h4 class="list-products text-center">List of Products:</h4>
+    <div class="container">
+      <div class="row">
+
+        <div class="card col" style="width: 25rem;">
+          <div class="card-body">
+            <h5 class="card-title" id="name1">COURSE 1</h5>
+            <p class="card-text" id="desc1">
+              Buy This! Price:
+              <span class="price ml-2" id="price1">$300</span>
+            </p>
+            <a href="#" class="btn btn-primary" id="btn1">Add To Cart</a>
+          </div>
+        </div>
+
+        <div class="card col" style="width: 25rem;">
+          <div class="card-body">
+            <h5 class="card-title" id="name2">COURSE 2</h5>
+            <p class="card-text" id="desc2">
+              Buy This! Price:
+              <span class="price ml-2" id="price2">$200</span>
+            </p>
+            <a href="#" class="btn btn-primary" id="btn2">Add To Cart</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Page Content Below -->
+  <div id="pageLayout" class="d-flex justify-content-center text-center">
+    <!-- Cards Displayed on Left -->
+    <div id="fix-image-sizing" class="d-flex justify-content-center text-center">
+      <div class="text-center" id="students"></div>
+    </div>
+  </div>
+
+  <!-- <footer class="page-footer text-center bg-dark">
+    <p>
+      <img src="./image/strawhat.png" style="width: 50px; height: 50px;" />
+      Thien Nguyen &copy 2020 | Creator of the Webpage
+      <img src="./image/Bleach.png" style="width: 50px; height: 50px;" />
+    </p>
+  </footer> -->
+</body>
+
+</html>

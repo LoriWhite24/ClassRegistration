@@ -1,3 +1,40 @@
+/*********
+AJAX call functions
+Author: Tara Kelly
+Provide logic for retrieving needed data from our API's
+***********/
+
+function validateLogin(){
+    //TODO: implement
+    // something like this:
+    // open a get request that will returns the student id if credentials are valid
+    // call getStudentById() and store student in a session
+    // can then pass student obj to other functions
+}
+
+//AJAX call for student using app (for now assume they are logged in)
+// for now this is for viewing how data looks in console
+function getStudentById(id){
+
+    var url = "/api/students/" + id;
+    var xhttpList = new XMLHttpRequest();
+    var student;
+
+    xhttpList.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            sessionStorage.setItem("student", this.responseText); // this code would depend on what this function is used for
+            console.log(this.responseText)
+        }
+    };
+    xhttpList.open("GET", url, false);
+    xhttpList.send();
+    console.log("Student received");  
+
+    return sessionStorage.getItem("student");
+
+}
+
+
 // AJAX calls for courses
 function getCourses(url){
 
@@ -7,15 +44,13 @@ function getCourses(url){
 
     xhttpList.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
-            // TODO: hook up to webpage
-            //renderCourseList(this.responseText);
-              // this is an example- depends on how Thien handles display
-              console.log(this.responseText);
+            sessionStorage.setItem("courses", this.responseText);
         }
     };
+
     xhttpList.open("GET", url, true);
     xhttpList.send();
-    console.log("Courses received");  
+    return sessionStorage.getItem("courses");
 }
 
 // may or may not need this function - this was for updating
@@ -27,14 +62,15 @@ function getCourseById(id){
 
     xhttpList.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
-            //sessionStorage.setItem("course", this.responseText); // this code would depend on what this function is used for
+            sessionStorage.setItem("course", this.responseText); // this code would depend on what this function is used for
+            //console.log(this.responseText);
         }
     };
     xhttpList.open("GET", url, false);
     xhttpList.send();
-    console.log("Restaurant received");  
+    console.log("Course received");  
 
-    return sessionStorage.getItem("restaurant");
+    return sessionStorage.getItem("course");
 }
 
 function getCoursesByDepartment(dept){
@@ -55,39 +91,160 @@ function getCourseByName(name){
 }
 
 // AJAX calls for Registrations
-function getAllRegistrations(){
+function getRegistrationsForStudent(id){
 
+    let url = "/api/registration/student/" + id;
     var xhttpList = new XMLHttpRequest();
 
     xhttpList.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
            console.log(this.responseText);
+           sessionStorage.setItem("registrations", this.responseText);
         }
     };
-    xhttpList.open("GET", "/api/registration", true);
+    xhttpList.open("GET", url, true);
     xhttpList.send();
-    console.log("Registrations received");  
+    console.log("Student's Registrations received");  
+    return sessionStorage.getItem("registrations");
+    
 }
-function addRegistration(){
 
-    // TODO: need to pull send data from interface - student id and course id, etc.
-    // let sendData = ....
-    sendPostRegistration(sendData);
+function addRegistration(courseId){
+
+    // hard-coding student id again for now
+    let studentId = 1;
+    let newRegistration = {
+        "id": -1,
+        "registrationDate": (new Date()).toJSON(),
+        "hasWithdrawn": false,
+        "studentId": studentId,
+        "courseId": courseId
+    }
+   
+    sendPostRegistration(newRegistration);
 }
 
 function sendPostRegistration(sendData){
 
     var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "/api/add/registration", true);
-    xhttp.setRequestHeader('Content-type', 'application/json');
+
     xhttp.onreadystatechange = function(){
-        // if the POST request went through, all we need to do is update HTML components
-        if(this.readyState == 4 && this.status == 200){
-            var display = document.getElementById("registrations");
-            display.innerHTML = '';
-            getRegistrations("/api/registration");
-            console.log("Registration created!");
+        // if the POST request went through,
+        // the student is alerted and the page is redirected to My Courses page w/ refreshed data
+        if(this.readyState == 4 && this.status == 201){
+            alert("Registration successful!");
+            window.location.href = "./view-registrations.html";
+            //location.reload();
         }
     };
+
+    xhttp.open("POST", "/api/add/registration", true);
+    xhttp.setRequestHeader('Content-type', 'application/json');
     xhttp.send(JSON.stringify(sendData));
 }
+
+/******
+ * withdraws a registration for a student
+ * can also re-enroll a previously withdrawn registration
+ * (param) : id of student, id of course, boolean (true = withdraw)
+ ******/
+function withdrawOrReEnroll(registrationId, courseId, studentId, value){
+
+    // call this function when a Withdraw button is clicked
+    // how to know if withdrawing or reenrolling?
+    // for now using two buttons, and passing in a boolean value for each button
+    let url = `/update/registration/student/${studentId}/course/${courseId}/withdraw/${value}`;
+
+    //*** I Need Lori to explain how the patch API works before I can troubleshoot */
+    // let registration = getRegistrationById();
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function(){
+        // if the POST request went through,
+        // the student is alerted and the page is redirected to My Courses page w/ refreshed data
+        if(this.readyState == 4 && this.status == 200){
+            alert("Updated Registration successfully!");
+           // window.location.href = "./view-registrations.html";
+            location.reload();
+        }
+    };
+
+    xhttp.open("PATCH", url, true);
+    xhttp.setRequestHeader('Content-type', 'application/json');
+    // do I need to put something in body?
+    // getting a 404 when try and send this request
+    xhttp.send();
+
+}
+
+/***********
+Render HTML functions
+Author: Tara Kelly
+Rendering portions of HTML with data from our database
+***********/
+
+function renderCourseTableRows(){
+
+    let courseList = getCourses("/api/courses/");
+    let jsonArray = JSON.parse(courseList);
+
+    let rows = "";
+    // the last cell in each table row will be a Register button
+    // the id of the button will be "register-" + the id of the course, i.e. "register-1"
+    // we can then pull the course id when someone clicks the Register button
+    jsonArray.forEach(json => {
+        rows +=
+        `<tr>
+            <td>${json.id}</td>
+            <td>${json.department}</td>
+            <td>${json.name}</td>
+            <td>${json.noCredits}</td>
+            <td><button id="register-${json.id}" onclick="addRegistration(${json.id})">Register</button></td>
+        </tr>`;
+    });
+ 
+    document.getElementById("courseTable").innerHTML = rows;
+
+}
+
+/******
+ * renders table rows of registered courses for a student
+ * (param) : id of student 
+ * uses student id to get list of registrations
+ * parses list of registrations to get each course object
+ * displays course object in a table row 
+ ******/
+function renderRegisteredCourses(studentId){
+
+    
+    let registrations = getRegistrationsForStudent(studentId);
+    let jsonArray = JSON.parse(registrations);
+
+    let rows = "";
+
+    for(var index = 0; index < jsonArray.length; index++){
+
+        let registration = jsonArray[index];
+        // try using registration id next
+        let registrationId = registration.id;
+        let course = getCourseById(registration.courseId);
+        let json = JSON.parse(course);
+
+        rows +=
+        `<tr>
+            <td>${json.id}</td>
+            <td>${json.department}</td>
+            <td>${json.name}</td>
+            <td>${json.noCredits}</td>
+            <td>
+                <button id="withdraw-${json.id}" onclick="withdrawOrReEnroll(${registrationid}, ${json.id}, ${studentId}, true)">Withdraw</button>
+                <button id="reenroll-${json.id}" onclick="withdrawOrReEnroll(${registrationId}, ${json.id}, ${studentId}, false)">ReEnroll</button>
+            </td>
+        </tr>`;
+    }
+
+    document.getElementById("registeredCoursesTable").innerHTML = rows;
+
+}
+
+
