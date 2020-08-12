@@ -108,11 +108,20 @@ function getRegistrationsForStudent(id){
     return sessionStorage.getItem("registrations");
     
 }
-function addRegistration(){
 
-    // TODO: need to pull send data from interface - student id and course id, etc.
-    // let sendData = ....
-    sendPostRegistration(sendData);
+function addRegistration(courseId){
+
+    // hard-coding student id again for now
+    let studentId = 1;
+    let newRegistration = {
+        "id": -1,
+        "registrationDate": (new Date()).toJSON(),
+        "hasWithdrawn": false,
+        "studentId": studentId,
+        "courseId": courseId
+    }
+   
+    sendPostRegistration(newRegistration);
 }
 
 function sendPostRegistration(sendData){
@@ -123,10 +132,10 @@ function sendPostRegistration(sendData){
     xhttp.onreadystatechange = function(){
         // if the POST request went through, all we need to do is update HTML components
         if(this.readyState == 4 && this.status == 200){
-            var display = document.getElementById("registrations");
-            display.innerHTML = '';
-            getRegistrations("/api/registration");
-            console.log("Registration created!");
+            // var display = document.getElementById("registrations");
+            // display.innerHTML = '';
+            // getRegistrations("/api/registration");
+            alert("Registration created!");
         }
     };
     xhttp.send(JSON.stringify(sendData));
@@ -154,7 +163,7 @@ function renderCourseTableRows(){
             <td>${json.department}</td>
             <td>${json.name}</td>
             <td>${json.noCredits}</td>
-            <td><button id="register-${json.id}">Register</button></td>
+            <td><button id="register-${json.id}" onclick="addRegistration(${json.id})">Register</button></td>
         </tr>`;
     });
  
