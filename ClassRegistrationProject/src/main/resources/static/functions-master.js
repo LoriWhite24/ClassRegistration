@@ -143,6 +143,38 @@ function sendPostRegistration(sendData){
     xhttp.send(JSON.stringify(sendData));
 }
 
+/******
+ * withdraws a registration for a student
+ * can also re-enroll a previously withdrawn registration
+ * (param) : id of student, id of course, boolean (true = withdraw)
+ ******/
+function withdrawOrReEnroll(courseId, studentId, value){
+
+    // call this function when a Withdraw button is clicked
+    // how to know if withdrawing or reenrolling?
+    // for now using two buttons, and passing in a boolean value for each button
+    let url = `/update/registration/student/${studentId}/course/${courseId}/withdraw/${value}`;
+
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function(){
+        // if the POST request went through,
+        // the student is alerted and the page is redirected to My Courses page w/ refreshed data
+        if(this.readyState == 4 && this.status == 200){
+            alert("Updated Registration successfully!");
+           // window.location.href = "./view-registrations.html";
+            location.reload();
+        }
+    };
+
+    xhttp.open("PATCH", url, true);
+    xhttp.setRequestHeader('Content-type', 'application/json');
+    // do I need to put something in body?
+    // getting a 404 when try and send this request
+    xhttp.send();
+
+}
+
 /***********
 Render HTML functions
 Author: Tara Kelly
@@ -200,10 +232,15 @@ function renderRegisteredCourses(studentId){
             <td>${json.department}</td>
             <td>${json.name}</td>
             <td>${json.noCredits}</td>
-            <td><button id="withdraw-${json.id}">Withdraw</button></td>
+            <td>
+                <button id="withdraw-${json.id}" onclick="withdrawOrReEnroll(${json.id}, ${studentId}, true)">Withdraw</button>
+                <button id="reenroll-${json.id}" onclick="withdrawOrReEnroll(${json.id}, ${studentId}, false)">ReEnroll</button>
+            </td>
         </tr>`;
     }
 
     document.getElementById("registeredCoursesTable").innerHTML = rows;
 
 }
+
+
