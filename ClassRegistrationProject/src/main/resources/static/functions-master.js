@@ -127,17 +127,19 @@ function addRegistration(courseId){
 function sendPostRegistration(sendData){
 
     var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "/api/add/registration", true);
-    xhttp.setRequestHeader('Content-type', 'application/json');
+
     xhttp.onreadystatechange = function(){
-        // if the POST request went through, all we need to do is update HTML components
-        if(this.readyState == 4 && this.status == 200){
-            // var display = document.getElementById("registrations");
-            // display.innerHTML = '';
-            // getRegistrations("/api/registration");
-            alert("Registration created!");
+        // if the POST request went through,
+        // the student is alerted and the page is redirected to My Courses page w/ refreshed data
+        if(this.readyState == 4 && this.status == 201){
+            alert("Registration successful!");
+            window.location.href = "./view-registrations.html";
+            //location.reload();
         }
     };
+
+    xhttp.open("POST", "/api/add/registration", true);
+    xhttp.setRequestHeader('Content-type', 'application/json');
     xhttp.send(JSON.stringify(sendData));
 }
 
