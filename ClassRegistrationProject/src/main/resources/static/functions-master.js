@@ -148,13 +148,15 @@ function sendPostRegistration(sendData){
  * can also re-enroll a previously withdrawn registration
  * (param) : id of student, id of course, boolean (true = withdraw)
  ******/
-function withdrawOrReEnroll(courseId, studentId, value){
+function withdrawOrReEnroll(registrationId, courseId, studentId, value){
 
     // call this function when a Withdraw button is clicked
     // how to know if withdrawing or reenrolling?
     // for now using two buttons, and passing in a boolean value for each button
     let url = `/update/registration/student/${studentId}/course/${courseId}/withdraw/${value}`;
 
+    //*** I Need Lori to explain how the patch API works before I can troubleshoot */
+    // let registration = getRegistrationById();
     var xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function(){
@@ -223,6 +225,8 @@ function renderRegisteredCourses(studentId){
     for(var index = 0; index < jsonArray.length; index++){
 
         let registration = jsonArray[index];
+        // try using registration id next
+        let registrationId = registration.id;
         let course = getCourseById(registration.courseId);
         let json = JSON.parse(course);
 
@@ -233,8 +237,8 @@ function renderRegisteredCourses(studentId){
             <td>${json.name}</td>
             <td>${json.noCredits}</td>
             <td>
-                <button id="withdraw-${json.id}" onclick="withdrawOrReEnroll(${json.id}, ${studentId}, true)">Withdraw</button>
-                <button id="reenroll-${json.id}" onclick="withdrawOrReEnroll(${json.id}, ${studentId}, false)">ReEnroll</button>
+                <button id="withdraw-${json.id}" onclick="withdrawOrReEnroll(${registrationid}, ${json.id}, ${studentId}, true)">Withdraw</button>
+                <button id="reenroll-${json.id}" onclick="withdrawOrReEnroll(${registrationId}, ${json.id}, ${studentId}, false)">ReEnroll</button>
             </td>
         </tr>`;
     }
