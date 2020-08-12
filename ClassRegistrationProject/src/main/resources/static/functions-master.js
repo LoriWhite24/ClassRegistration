@@ -237,7 +237,7 @@ function renderRegisteredCourses(studentId){
             <td>${json.name}</td>
             <td>${json.noCredits}</td>
             <td>
-                <button id="withdraw-${json.id}" onclick="withdrawOrReEnroll(${registrationid}, ${json.id}, ${studentId}, true)">Withdraw</button>
+                <button id="withdraw-${json.id}" onclick="withdrawOrReEnroll(${registrationId}, ${json.id}, ${studentId}, true)">Withdraw</button>
                 <button id="reenroll-${json.id}" onclick="withdrawOrReEnroll(${registrationId}, ${json.id}, ${studentId}, false)">ReEnroll</button>
             </td>
         </tr>`;
