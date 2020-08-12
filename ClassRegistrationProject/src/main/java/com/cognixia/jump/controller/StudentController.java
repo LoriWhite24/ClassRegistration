@@ -44,7 +44,7 @@ public class StudentController {
 
 		Optional<Student> student = service.findById(id);
 
-		if (!student.isPresent()) {
+		if (student.isEmpty()) {
 			throw new ResourceNotFoundException("Student with id = " + id + " does not exist.");
 		}
 

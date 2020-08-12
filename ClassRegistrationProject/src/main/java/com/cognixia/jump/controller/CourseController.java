@@ -52,7 +52,7 @@ public class CourseController {
 
 		Optional<Course> course = service.findById(id);
 
-		if (!course.isPresent()) {
+		if (course.isEmpty()) {
 			throw new ResourceNotFoundException("Course with id = " + id + " does not exist.");
 		}
 

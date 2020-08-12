@@ -103,33 +103,33 @@ public class Registration implements Serializable{
 		this.hasWithdrawn = hasWithdrawn;
 	}
 	/**
-	 * Retrieves the student that registered for the course.
+	 * Retrieves the student's id that registered for the course.
 	 * @author Lori White
-	 * @return Long - the student that registered for the course
+	 * @return Long - the student's id that registered for the course
 	 */
 	public Long getStudentId() {
 		return studentId;
 	}
 	/**
-	 * Updates the student that registered for the course.
+	 * Updates the student's id that registered for the course.
 	 * @author Lori White
-	 * @param studentId the student that registered for the course
+	 * @param studentId the student's id that registered for the course
 	 */
 	public void setStudentId(Long studentId) {
 		this.studentId = studentId;
 	}
 	/**
-	 * Retrieves the course the student registered for.
+	 * Retrieves the course's id the student registered for.
 	 * @author Lori White
-	 * @return Long - the course the student registered for
+	 * @return Long - the course's id the student registered for
 	 */
 	public Long getCourseId() {
 		return courseId;
 	}
 	/**
-	 * Updates the course the student registered for.
+	 * Updates the course's id the student registered for.
 	 * @author Lori White
-	 * @param courseId the course the student registered for
+	 * @param courseId the course's id the student registered for
 	 */
 	public void setCourseId(Long courseId) {
 		this.courseId = courseId;
