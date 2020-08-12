@@ -204,21 +204,6 @@ function renderRegisteredCourses(studentId){
         </tr>`;
     }
 
-   
-    // just leaving this dup code for now since it's not much- will be more clear
-    // don't think we need registration id b/c of how Lori's API call works - just student id and course id
-    // ideally we will be able to store and access student id from anywhere within a given session
-    // jsonArray.forEach(json => {
-    //     rows +=
-    //     `<tr>
-    //         <td>${json.id}</td>
-    //         <td>${json.department}</td>
-    //         <td>${json.name}</td>
-    //         <td>${json.noCredits}</td>
-    //         <td><button id="withdraw-${json.id}">Withdraw</button></td>
-    //     </tr>`;
-    // });
-
     document.getElementById("registeredCoursesTable").innerHTML = rows;
 
 }
