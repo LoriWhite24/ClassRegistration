@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,13 +15,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cognixia.jump.exception.ResourceAlreadyExistsException;
+import com.cognixia.jump.exception.ResourceNotFoundException;
 import com.cognixia.jump.model.Course;
 import com.cognixia.jump.repository.CourseRepository;
 
 /**
  * The controller for the Courses. 
  * @author Lori White and Tara Kelly
- * @version v3 (08/10/2020)
+ * @version v4 (08/12/2020)
  */
 @RequestMapping("/api")
 @RestController
@@ -39,35 +42,37 @@ public class CourseController {
 	}
 	/**
 	 * Retrieves a course pertaining to an id.
-	 * @author Tara Kelly
+	 * @author Lori White and Tara Kelly
 	 * @param id the course id to search for
 	 * @return Course - the course pertaining to the id
+	 * @throws ResourceNotFoundException is thrown when the id does not match an existing course in the database
 	 */
 	@GetMapping("/courses/{id}")
-	public Course getCourse(@PathVariable long id) {
+	public Course getCourse(@PathVariable long id) throws ResourceNotFoundException {
 
 		Optional<Course> course = service.findById(id);
 
-		if (course.isPresent()) {
-			return course.get();
+		if (course.isEmpty()) {
+			throw new ResourceNotFoundException("Course with id = " + id + " does not exist.");
 		}
 
-		return new Course();
+		return course.get();
 	}
 	/**
 	 * Adds a course to DB.
-	 * @author Tara Kelly
+	 * @author Lori White and Tara Kelly
 	 * @param newCourse the new Course
 	 * @return ResponseEntity whether or not course was inserted correctly
+	 * @throws ResourceAlreadyExistsException is thrown when the id does match an existing course in the database
 	 */
 	@PostMapping("/add/course")
-	public ResponseEntity<String> addCourse(@Valid @RequestBody Course newCourse) {
+	public ResponseEntity<Course> addCourse(@Valid @RequestBody Course newCourse) throws ResourceAlreadyExistsException {
 		if(service.existsById(newCourse.getId())) {
-			return ResponseEntity.status(400).body("Course with id = " + newCourse.getId() + " already exists.");
-		} else {
-			Course created = service.save(newCourse);
-			return ResponseEntity.status(201).body("Created: " + created);
+			throw new ResourceAlreadyExistsException("Course with id = " + newCourse.getId() + " already exists.");
 		}
+		
+		Course created = service.save(newCourse);
+		return new ResponseEntity<>(created, HttpStatus.CREATED);
 	}
 	/**
 	 * Retrieves a list of courses that are within the specified department.
