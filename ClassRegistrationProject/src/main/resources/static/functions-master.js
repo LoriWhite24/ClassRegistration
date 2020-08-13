@@ -13,8 +13,8 @@ function validateLogin(){
 
     // for now, enter student id in text field as well b/c of way controller is working
     //let id = txtStudentId.textContent;
-    let email = "student1@gmail.com"; //txtEmail.textContent;
-    let password = "password1"; //txtPassword.textContent;
+    let email = txtEmail.value; //"student1@gmail.com"
+    let password = txtPassword.value; //"password1"
 
     // let student = getStudentById(id);
     // if(student != null){
@@ -40,6 +40,8 @@ function validateLogin(){
             console.log(this.responseText);
             //student = getStudentById(id);
             alert("Valid login");
+            window.location.href = "./registration.html";
+
         }
     };
     xhttpList.open("GET", url, false);
@@ -193,6 +195,8 @@ function sendPostRegistration(sendData){
             alert("Registration successful!");
             window.location.href = "./view-registrations.html";
             //location.reload();
+        }else if(this.status == 409){
+            alert("You have already registered for this course");
         }
     };
 
@@ -206,44 +210,37 @@ function sendPostRegistration(sendData){
  * can also re-enroll a previously withdrawn registration
  * (param) : id of student, id of course, boolean (true = withdraw)
  ******/
-function withdrawOrReEnroll(registrationId, courseId, studentId, value){
+function withdrawOrReEnroll(courseId, studentId, value){
 
-    console.log(registrationId);
-    console.log(courseId);
-    console.log(studentId);
-    console.log(value);
-    // call this function when a Withdraw button is clicked
-    // how to know if withdrawing or reenrolling?
-    // for now using two buttons, and passing in a boolean value for each button
+   
     let url = "api/update/registration/has_withdrawn";
-
-    // let registration = getRegistrationById();
-    // console.log(registration);
-    // registration.hasWithdrawn = value;
 
     var sendData = {
         studentId: studentId,
         courseId: courseId,
         hasWithdrawn: value
     };
+    console.log(sendData);
+
 
     var xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function(){
         // if the POST request went through,
         // the student is alerted and the page is redirected to My Courses page w/ refreshed data
-        if(this.readyState == 4 && this.status == 200){
+        // TODO: the button displayed should change based on status
+        if(this.readyState == 4 && this.status == 202){
             alert("Updated Registration successfully!");
+            console.log(this.responseText);
            // window.location.href = "./view-registrations.html";
-            location.reload();
+            //location.reload();
         }
     };
 
     xhttp.open("PATCH", url, true);
     xhttp.setRequestHeader('Content-type', 'application/json');
-    // do I need to put something in body?
-    // still getting a 404 when try and send this request - i Postman as well
-    xhttp.send(sendData);
+   
+    xhttp.send(JSON.stringify(sendData));
 
 }
 
