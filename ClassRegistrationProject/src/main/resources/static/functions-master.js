@@ -12,11 +12,25 @@ function validateLogin(){
     // can then pass student obj to other functions
 
     // for now, enter student id in text field as well b/c of way controller is working
-   // let id = txtStudentId.textContent;
-    let email = txtEmail.textContent;
-    let password = txtPassword.textContent;
+    //let id = txtStudentId.textContent;
+    let email = "student1@gmail.com"; //txtEmail.textContent;
+    let password = "password1"; //txtPassword.textContent;
 
-    var url = `/students/login/username/${email}/password/${password}`;
+    // let student = getStudentById(id);
+    // if(student != null){
+    //     if(student.email == email && student.password == password){
+    //         window.location.href = "./registration.html";
+    //         // I am not sure if this line will pass to new webpage's sessionStorage
+    //         return student;
+    //     }
+    // }else{
+    //     alert("Invalid login!");
+    //     txtStudentId.textContent = "";
+    //     txtEmail.textContent = "";
+    //     txtPassword.textContent = "";
+    // }
+
+    var url = `api/students/login/username/${email}/password/${password}`;
     var xhttpList = new XMLHttpRequest();
     
     var student;
@@ -201,7 +215,7 @@ function withdrawOrReEnroll(registrationId, courseId, studentId, value){
     // call this function when a Withdraw button is clicked
     // how to know if withdrawing or reenrolling?
     // for now using two buttons, and passing in a boolean value for each button
-    let url = "/update/registration/has_withdrawn";
+    let url = "api/update/registration/has_withdrawn";
 
     // let registration = getRegistrationById();
     // console.log(registration);
