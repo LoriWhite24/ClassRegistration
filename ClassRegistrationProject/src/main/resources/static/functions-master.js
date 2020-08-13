@@ -150,6 +150,10 @@ function sendPostRegistration(sendData){
  ******/
 function withdrawOrReEnroll(registrationId, courseId, studentId, value){
 
+    console.log(registrationId);
+    console.log(courseId);
+    console.log(studentId);
+    console.log(value);
     // call this function when a Withdraw button is clicked
     // how to know if withdrawing or reenrolling?
     // for now using two buttons, and passing in a boolean value for each button
