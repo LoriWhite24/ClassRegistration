@@ -12,8 +12,7 @@ function validateLogin(){
     // can then pass student obj to other functions
 
     // for now, enter student id in text field as well b/c of way controller is working
-    // note for Lori: we need the student though - if I don't receive student object back (or id), I can't store their id/information in a session in the browser - TK
-    let id = txtStudentId.textContent;
+   // let id = txtStudentId.textContent;
     let email = txtEmail.textContent;
     let password = txtPassword.textContent;
 
@@ -23,18 +22,18 @@ function validateLogin(){
     var student;
     xhttpList.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
+            sessionStorage.setItem("student", this.responseText);
             console.log(this.responseText);
-            student = getStudentById(id);
+            //student = getStudentById(id);
             alert("Valid login");
         }
     };
     xhttpList.open("GET", url, false);
     xhttpList.send();
-    console.log("Student login validated");  
 
     // do I need to keep returning the student? or can I access it from anywhere in page?
     // can I return it here and pass to next webpage?
-    return student;    
+    return sessionStorage.getItem("student");  
 }
 
 //AJAX call for student using app (for now assume they are logged in)
