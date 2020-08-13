@@ -5,11 +5,36 @@ Provide logic for retrieving needed data from our API's
 ***********/
 
 function validateLogin(){
-    //TODO: implement
+    //TODO: implement - this would hook up to a login button on login page
     // something like this:
     // open a get request that will returns the student id if credentials are valid
     // call getStudentById() and store student in a session
     // can then pass student obj to other functions
+
+    // for now, enter student id in text field as well b/c of way controller is working
+    // note for Lori: we need the student though - if I don't receive student object back (or id), I can't store their id/information in a session in the browser - TK
+    let id = txtStudentId.textContent;
+    let email = txtEmail.textContent;
+    let password = txtPassword.textContent;
+
+    var url = `/students/login/username/${email}/password/${password}`;
+    var xhttpList = new XMLHttpRequest();
+    
+    var student;
+    xhttpList.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            console.log(this.responseText);
+            student = getStudentById(id);
+            alert("Valid login");
+        }
+    };
+    xhttpList.open("GET", url, false);
+    xhttpList.send();
+    console.log("Student login validated");  
+
+    // do I need to keep returning the student? or can I access it from anywhere in page?
+    // can I return it here and pass to next webpage?
+    return student;    
 }
 
 //AJAX call for student using app (for now assume they are logged in)
