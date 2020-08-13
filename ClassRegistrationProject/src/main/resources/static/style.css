@@ -2,23 +2,9 @@
     box-sizing:border-box
 }
 
-.homeBody {
-    margin: 0;
-    background-image: url("./images/kaneki-ken.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
 .tableBody {
     margin: 0;
     background-color: white;
-}
-
-.aboutBody {
-    margin: 0;
-    background-image: url("./images/cowboy.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
 }
 
 /* Hide the images by default */
@@ -26,19 +12,8 @@
     display: none;
 }
 
-.nav {
-    background-image: linear-gradient(to right, black, red);
-}
-
 nav .navbar-nav li a{
     color: white !important;
-}
-
-.homeText {
-    text-align: center;
-    font-style: italic;
-    color: red;
-    font-family: Impact, Charcoal, sans-serif;
 }
 
 .footerText2 {
@@ -58,47 +33,19 @@ nav .navbar-nav li a{
     float: right;
 }
 
-img {
-	vertical-align: middle;
-}
-
-/* Slideshow container */
-.slideshow-container {
-  max-width: 1000px;
-  position: relative;
-  margin: auto;
-}
-
-footer {
-	position: fixed;
-	left: 0;
-	bottom: 0;
-    width: 100%;
-    background-image: linear-gradient(to right, black, red);
-	font-style: italic;
+.student-name {
+    text-align: left;
+    color: cyan;
 }
 
 .title {
     text-align: center;
-    color: red;
-    text-decoration: underline;
+    color: cyan;
     font-family: Impact, Charcoal, sans-serif;
 }
 
 .desc {
     width: 250px;
-}
-
-.tableImg {
-    width: 150px;
-    height: 150px;
-    border: 6px solid #343a40;
-}
-
-.slideImg {
-    width: 100%;
-    height: 50%;
-    border: 10px solid black;
 }
 
 th {
@@ -109,7 +56,6 @@ th {
 
 thead {
     text-align: center;
-    background-image: linear-gradient(black, teal);
 }
 
 tbody {
@@ -122,14 +68,9 @@ button {
 
 td {
     width: 150px;
-    color: red;
+    color: cyan;
 }
 
 .size {
     width: 100%;
-}
-
-.aboutLink {
-    color: red;
-    background-color: black;
 }
