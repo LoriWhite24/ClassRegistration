@@ -115,6 +115,26 @@ function getCourseByName(name){
 }
 
 // AJAX calls for Registrations
+// will I need this function to do withdraw?
+function getRegistrationById(){
+
+    var url = "/api/registration/" + id;
+    var xhttpList = new XMLHttpRequest();
+    var registration;
+
+    xhttpList.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            sessionStorage.setItem("registration", this.responseText); 
+            //console.log(this.responseText);
+        }
+    };
+    xhttpList.open("GET", url, false);
+    xhttpList.send();
+    console.log("Registration received");  
+
+    return sessionStorage.getItem("registration");
+}
+
 function getRegistrationsForStudent(id){
 
     let url = "/api/registration/student/" + id;
@@ -181,10 +201,18 @@ function withdrawOrReEnroll(registrationId, courseId, studentId, value){
     // call this function when a Withdraw button is clicked
     // how to know if withdrawing or reenrolling?
     // for now using two buttons, and passing in a boolean value for each button
-    let url = `/update/registration/student/${studentId}/course/${courseId}/withdraw/${value}`;
+    let url = "/update/registration/has_withdrawn";
 
-    //*** I Need Lori to explain how the patch API works before I can troubleshoot */
     // let registration = getRegistrationById();
+    // console.log(registration);
+    // registration.hasWithdrawn = value;
+
+    var sendData = {
+        studentId: studentId,
+        courseId: courseId,
+        hasWithdrawn: value
+    };
+
     var xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function(){
@@ -200,8 +228,8 @@ function withdrawOrReEnroll(registrationId, courseId, studentId, value){
     xhttp.open("PATCH", url, true);
     xhttp.setRequestHeader('Content-type', 'application/json');
     // do I need to put something in body?
-    // getting a 404 when try and send this request
-    xhttp.send();
+    // still getting a 404 when try and send this request - i Postman as well
+    xhttp.send(sendData);
 
 }
 
