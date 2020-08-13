@@ -10,6 +10,7 @@ public class InvalidLoginException extends Exception{
 	private static final long serialVersionUID = 5035892024047509790L;
 	/**
 	 * The default constructor.
+	 * @author Lori White
 	 */
 	public InvalidLoginException() {
 		super("Password is Invalid!");

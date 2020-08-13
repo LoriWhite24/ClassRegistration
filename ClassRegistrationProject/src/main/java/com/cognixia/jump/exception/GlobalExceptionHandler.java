@@ -17,6 +17,7 @@ import org.springframework.web.context.request.WebRequest;
 public class GlobalExceptionHandler {
 	/**
 	 * The handler for the custom exception for a resource that was not found.
+	 * @author Lori White
 	 * @param ex the exception being thrown
 	 * @param request the current web request
 	 * @return ResponseEntity - the error details 
@@ -28,6 +29,7 @@ public class GlobalExceptionHandler {
 	}
 	/**
 	 * The handler for the custom exception for an invalid login.
+	 * @author Lori White
 	 * @param ex the exception being thrown
 	 * @param request the current web request
 	 * @return ResponseEntity - the error details 
@@ -39,6 +41,7 @@ public class GlobalExceptionHandler {
 	}
 	/**
 	 * The handler for the custom exception for an invalid has withdrawn update.
+	 * @author Lori White
 	 * @param ex the exception being thrown
 	 * @param request the current web request
 	 * @return ResponseEntity - the error details 
@@ -50,6 +53,7 @@ public class GlobalExceptionHandler {
 	}
 	/**
 	 * The handler for the custom exception for a resource that already exists.
+	 * @author Lori White
 	 * @param ex the exception being thrown
 	 * @param request the current web request
 	 * @return ResponseEntity - the error details 
@@ -61,6 +65,7 @@ public class GlobalExceptionHandler {
 	}
 	/**
 	 * The handler an exception.
+	 * @author Lori White
 	 * @param ex the exception being thrown
 	 * @param request the current web request
 	 * @return ResponseEntity - the error details 

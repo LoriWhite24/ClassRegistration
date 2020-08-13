@@ -25,7 +25,7 @@ import com.cognixia.jump.repository.RegistrationRepository;
 /**
  * The controller for Registration.
  * @author Lori White
- * @version v5 (08/10/2020)
+ * @version v6 (08/13/2020)
  */
 @RequestMapping("/api")
 @RestController
@@ -39,7 +39,7 @@ public class RegistrationController {
 	 * @return List - the list of registry entries for this student
 	 * @throws ResourceNotFoundException is thrown when the student id does not match any existing registry entries with that specified student id in the database
 	 */
-	@GetMapping("/registration/student/{id}")
+	@GetMapping("/registration/student/{studentId}")
 	public List<Registration> getRegistryEntriesByStudent(@PathVariable long studentId) throws ResourceNotFoundException {
 		if(!service.existsByStudentId(studentId)) {
 			throw new ResourceNotFoundException("Registry entries with student id = " + studentId + " does not exist.");
@@ -53,7 +53,7 @@ public class RegistrationController {
 	 * @return List - the list of registry entries for this course 
 	 * @throws ResourceNotFoundException is thrown when the course id does not match any existing registry entries with that specified course id in the database
 	 */
-	@GetMapping("/registration/course/{id}")
+	@GetMapping("/registration/course/{courseId}")
 	public List<Registration> getRegistryEntriesByCourse(@PathVariable long courseId) throws ResourceNotFoundException {
 		if(!service.existsByCourseId(courseId)) {
 			throw new ResourceNotFoundException("Registry entries with course id = " + courseId + " does not exist.");
@@ -76,7 +76,7 @@ public class RegistrationController {
 		
 		Registration patched = service.findByStudentIdandCourseId(partialRegistryEntry.getStudentId(), partialRegistryEntry.getCourseId());
 		if(partialRegistryEntry.getHasWithdrawn().equals(patched.getHasWithdrawn())) {
-			throw new InvalidHasWithdrawnUpdateException();
+			throw new InvalidHasWithdrawnUpdateException(patched.getHasWithdrawn());
 		}
 		patched.setHasWithdrawn(partialRegistryEntry.getHasWithdrawn());
 		service.save(patched);
@@ -93,9 +93,11 @@ public class RegistrationController {
 	public ResponseEntity<Registration> addRegistryEntry(@Valid @RequestBody Registration registryEntry) throws ResourceAlreadyExistsException {
 		if(service.existsById(registryEntry.getId())) {
 			throw new ResourceAlreadyExistsException("Registry entry with id = " + registryEntry.getId() + " already exists.");
-		} else {
-			Registration created = service.save(registryEntry);
-			return new ResponseEntity<>(created, HttpStatus.CREATED);
+		} 
+		if(service.existsByStudentIdandCourseId(registryEntry.getStudentId(), registryEntry.getCourseId())) {
+			throw new ResourceAlreadyExistsException("Registry entry with student id = " + registryEntry.getStudentId() + " and with course id = " + registryEntry.getCourseId() + " already exists.");
 		}
+		Registration created = service.save(registryEntry);
+		return new ResponseEntity<>(created, HttpStatus.CREATED);
 	}
 }

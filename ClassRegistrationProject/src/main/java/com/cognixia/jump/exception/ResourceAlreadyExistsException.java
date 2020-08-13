@@ -9,6 +9,7 @@ public class ResourceAlreadyExistsException extends Exception{
 	private static final long serialVersionUID = 5777514691224236672L;
 	/**
 	 * The overloaded constructor.
+	 * @author Lori White
 	 * @param message the custom error message
 	 */
 	public ResourceAlreadyExistsException(String message) {
