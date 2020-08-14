@@ -20,7 +20,6 @@ function validateLogin(){
             //student = getStudentById(id);
             alert("Valid login");
             window.location.href = "./registration.html";
-
         }
     };
     xhttpList.open("GET", url, false);
@@ -47,6 +46,7 @@ function logOut(){
     // need to clear both student obj in local storage and courses/registrations in session storage
     localStorage.clear();
     sessionStorage.clear();
+    window.location.href = "./index.html";
 }
 
 //AJAX call for student using app (for now assume they are logged in)
@@ -232,11 +232,10 @@ function withdrawOrReEnroll(courseId, studentId, value){
         if(this.readyState == 4 && this.status == 202){
             alert("Updated Registration successfully!");
             console.log(this.responseText);
-            //TODO: reloading page not working - reloading cached version
-            // better to grab the button element and update it
-            //window.location.href = "./view-registrations.html";
-            // this supposedly fixes cache issues, but not working
-            window.location.reload(true);
+            // swapping out button
+            let buttonDiv = document.getElementById("btn"+ courseId);
+            buttonDiv.innerHTML = "";
+            buttonDiv.innerHTML = drawButton(courseId, studentId, value);
         }
     };
 
@@ -289,6 +288,7 @@ function renderRegisteredCourses(){
     // resetting table 
     let table = document.getElementById("registeredCoursesTable");
     table.innerHTML = "";
+    //return;
 
     let student = getLoggedInStudent();
     // this prevents an error in console when accessing the My Courses page w/out being logged in
@@ -332,7 +332,7 @@ function renderRegisteredCourses(){
             <td>${json.name}</td>
             <td>${json.noCredits}</td>
             <td>
-                ${btnDisplay}
+                <div id="btn${json.id}">${btnDisplay}</div>
             </td>
         </tr>`;
     }
@@ -341,11 +341,11 @@ function renderRegisteredCourses(){
 
 }
 
-function drawButton(buttonName){
-    if(buttonName == "withdraw"){
-        return `<button class="btn btn-danger" id="withdraw-${json.id}" onclick="withdrawOrReEnroll(${json.id}, ${studentId}, true)">Withdraw</button>`;
-    }else if(buttonName == "reenroll"){
-        return `<button class="btn btn-primary" id="reenroll-${json.id}" onclick="withdrawOrReEnroll(${json.id}, ${studentId}, false)">ReEnroll</button>`;
+function drawButton(courseId, studentId, value){
+    if(value == false){
+        return `<button class="btn btn-danger" id="withdraw-${courseId}" onclick="withdrawOrReEnroll(${courseId}, ${studentId}, true)">Withdraw</button>`;
+    }else if(value == true){
+        return `<button class="btn btn-primary" id="reenroll-${studentId}" onclick="withdrawOrReEnroll(${courseId}, ${studentId}, false)">ReEnroll</button>`;
     } 
 }
 
