@@ -194,8 +194,6 @@ function sendPostRegistration(sendData){
         // the student is alerted and the page is redirected to My Courses page w/ refreshed data
         if(this.readyState == 4 && this.status == 201){
             alert("Registration successful!");
-            window.location.href = "./view-registrations.html";
-            //location.reload();
         }else if(this.status == 409){
             alert("You have already registered for this course");
         }
@@ -233,8 +231,11 @@ function withdrawOrReEnroll(courseId, studentId, value){
         if(this.readyState == 4 && this.status == 202){
             alert("Updated Registration successfully!");
             console.log(this.responseText);
-           // window.location.href = "./view-registrations.html";
-            //location.reload();
+            //TODO: reloading page not working - reloading cached version
+            // better to grab the button element and update it
+            //window.location.href = "./view-registrations.html";
+            // this supposedly fixes cache issues, but not working
+            window.location.reload(true);
         }
     };
 
@@ -252,7 +253,7 @@ Rendering portions of HTML with data from our database
 ***********/
 
 function renderCourseTableRows(){
-
+   
     let courseList = getCourses("/api/courses/");
     let jsonArray = JSON.parse(courseList);
 
@@ -284,6 +285,10 @@ function renderCourseTableRows(){
  ******/
 function renderRegisteredCourses(){
 
+    // resetting table 
+    let table = document.getElementById("registeredCoursesTable");
+    table.innerHTML = "";
+
     let student = getLoggedInStudent();
     // this prevents an error in console when accessing the My Courses page w/out being logged in
     // could be handled differently but OK for now
@@ -300,14 +305,24 @@ function renderRegisteredCourses(){
     let jsonArray = JSON.parse(registrations);
 
     let rows = "";
+    var btnDisplay;
 
     for(var index = 0; index < jsonArray.length; index++){
 
         let registration = jsonArray[index];
+        
         // try using registration id next
         //let registrationId = registration.id;
         let course = getCourseById(registration.courseId);
         let json = JSON.parse(course);
+
+        if(registration.hasWithdrawn == false){
+            //btnName = "withdraw";
+            btnDisplay = `<button class="btn btn-danger" id="withdraw-${json.id}" onclick="withdrawOrReEnroll(${json.id}, ${studentId}, true)">Withdraw</button>`;
+        }else if(registration.hasWithdrawn == true){
+            //btnName = "reenroll";
+            btnDisplay = `<button class="btn btn-primary" id="reenroll-${json.id}" onclick="withdrawOrReEnroll(${json.id}, ${studentId}, false)">ReEnroll</button>`;
+        }
 
         rows +=
         `<tr>
@@ -316,14 +331,21 @@ function renderRegisteredCourses(){
             <td>${json.name}</td>
             <td>${json.noCredits}</td>
             <td>
-                <button class="btn btn-primary" id="withdraw-${json.id}" onclick="withdrawOrReEnroll(${json.id}, ${studentId}, true)">Withdraw</button>
-                <button class="btn btn-danger" id="reenroll-${json.id}" onclick="withdrawOrReEnroll(${json.id}, ${studentId}, false)">ReEnroll</button>
+                ${btnDisplay}
             </td>
         </tr>`;
     }
 
-    document.getElementById("registeredCoursesTable").innerHTML = rows;
+    table.innerHTML = rows;
 
+}
+
+function drawButton(buttonName){
+    if(buttonName == "withdraw"){
+        return `<button class="btn btn-danger" id="withdraw-${json.id}" onclick="withdrawOrReEnroll(${json.id}, ${studentId}, true)">Withdraw</button>`;
+    }else if(buttonName == "reenroll"){
+        return `<button class="btn btn-primary" id="reenroll-${json.id}" onclick="withdrawOrReEnroll(${json.id}, ${studentId}, false)">ReEnroll</button>`;
+    } 
 }
 
 
