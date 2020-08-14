@@ -194,6 +194,7 @@ function sendPostRegistration(sendData){
         // the student is alerted and the page is redirected to My Courses page w/ refreshed data
         if(this.readyState == 4 && this.status == 201){
             alert("Registration successful!");
+            window.location.href = "./view-registrations.html";
         }else if(this.status == 409){
             alert("You have already registered for this course");
         }
