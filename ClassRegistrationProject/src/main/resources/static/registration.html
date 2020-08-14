@@ -16,27 +16,29 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
-    <title>Registeration</title>
+    <title>Registration</title>
 
     <link rel="stylesheet" href="./style.css" />
     <script src="functions-master.js"></script>
     <script>
         // this is some test code for AJAX calls working properly
         window.addEventListener("load", function(){
-            var student = getStudentById(1);
-            var json = JSON.parse(student);
+            // getLoggedInStudent();
+            // TEST CODE (may still pull some)
+            //var student = getStudentById(1);
+            //var json = JSON.parse(student);
             //console.log(student);
-            console.log(json.id); // undefined - try parsing
-            var registrations = getRegistrationsForStudent(json.id);
-            let jsonArray = JSON.parse(registrations);
-            console.log(jsonArray);
-            for(var index = 0; index < jsonArray.length; index++){
-                console.log(jsonArray[index]);
-                let registration = jsonArray[index];
-                getCourseById(registration.courseId);
-            }
-            console.log(getCourses("/api/courses/"));
-            validateLogin();
+            // console.log(json.id); // undefined - try parsing
+            // var registrations = getRegistrationsForStudent(json.id);
+            // let jsonArray = JSON.parse(registrations);
+            // console.log(jsonArray);
+            // for(var index = 0; index < jsonArray.length; index++){
+            //     console.log(jsonArray[index]);
+            //     let registration = jsonArray[index];
+            //     getCourseById(registration.courseId);
+            // }
+            // console.log(getCourses("/api/courses/"));
+            // validateLogin();
         });
     </script>
 </head>
@@ -70,7 +72,11 @@
                 </li>
 
             </ul>
+
+            <h1 class="student-name">Student:</h1>
+
             <form class="form-inline my-2 my-lg-0" id="search-form">
+                <button type="submit" class="btn btn-danger" onclick="logout()">Logout</button>
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
                     id="search-term" />
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>

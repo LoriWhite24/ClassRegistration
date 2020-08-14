@@ -5,30 +5,9 @@ Provide logic for retrieving needed data from our API's
 ***********/
 
 function validateLogin(){
-    //TODO: implement - this would hook up to a login button on login page
-    // something like this:
-    // open a get request that will returns the student id if credentials are valid
-    // call getStudentById() and store student in a session
-    // can then pass student obj to other functions
 
-    // for now, enter student id in text field as well b/c of way controller is working
-    //let id = txtStudentId.textContent;
     let email = txtEmail.value; //"student1@gmail.com"
     let password = txtPassword.value; //"password1"
-
-    // let student = getStudentById(id);
-    // if(student != null){
-    //     if(student.email == email && student.password == password){
-    //         window.location.href = "./registration.html";
-    //         // I am not sure if this line will pass to new webpage's sessionStorage
-    //         return student;
-    //     }
-    // }else{
-    //     alert("Invalid login!");
-    //     txtStudentId.textContent = "";
-    //     txtEmail.textContent = "";
-    //     txtPassword.textContent = "";
-    // }
 
     var url = `api/students/login/username/${email}/password/${password}`;
     var xhttpList = new XMLHttpRequest();
@@ -36,7 +15,7 @@ function validateLogin(){
     var student;
     xhttpList.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
-            sessionStorage.setItem("student", this.responseText);
+            localStorage.setItem("student", this.responseText);
             console.log(this.responseText);
             //student = getStudentById(id);
             alert("Valid login");
@@ -49,7 +28,25 @@ function validateLogin(){
 
     // do I need to keep returning the student? or can I access it from anywhere in page?
     // can I return it here and pass to next webpage?
-    return sessionStorage.getItem("student");  
+    // return sessionStorage.getItem("student");  
+}
+
+function getLoggedInStudent(){
+    // you have to parse the student from local storage each time you get it
+    let studentStr = localStorage.getItem("student");  
+    if(studentStr == "" || studentStr == null){
+        return "";
+    }
+    let student = JSON.parse(studentStr);
+
+    return student;
+}
+
+function logOut(){
+
+    // need to clear both student obj in local storage and courses/registrations in session storage
+    localStorage.clear();
+    sessionStorage.clear();
 }
 
 //AJAX call for student using app (for now assume they are logged in)
@@ -172,12 +169,16 @@ function getRegistrationsForStudent(id){
 function addRegistration(courseId){
 
     // hard-coding student id again for now
-    let studentId = 1;
+    //let studentId = 1;
+
+    // you have to parse the student from local storage each time you get it
+    let student = getLoggedInStudent();
+
     let newRegistration = {
         "id": -1,
         "registrationDate": (new Date()).toJSON(),
         "hasWithdrawn": false,
-        "studentId": studentId,
+        "studentId": student.id,
         "courseId": courseId
     }
    
@@ -281,10 +282,21 @@ function renderCourseTableRows(){
  * parses list of registrations to get each course object
  * displays course object in a table row 
  ******/
-function renderRegisteredCourses(studentId){
+function renderRegisteredCourses(){
 
-    
+    let student = getLoggedInStudent();
+    // this prevents an error in console when accessing the My Courses page w/out being logged in
+    // could be handled differently but OK for now
+    if(student == ""){
+        return;
+    }
+    let studentId = student.id;
+
     let registrations = getRegistrationsForStudent(studentId);
+    if(registrations == null){
+        return;
+    }
+
     let jsonArray = JSON.parse(registrations);
 
     let rows = "";
@@ -293,7 +305,7 @@ function renderRegisteredCourses(studentId){
 
         let registration = jsonArray[index];
         // try using registration id next
-        let registrationId = registration.id;
+        //let registrationId = registration.id;
         let course = getCourseById(registration.courseId);
         let json = JSON.parse(course);
 
@@ -304,8 +316,8 @@ function renderRegisteredCourses(studentId){
             <td>${json.name}</td>
             <td>${json.noCredits}</td>
             <td>
-                <button class="btn btn-primary" id="withdraw-${json.id}" onclick="withdrawOrReEnroll(${registrationId}, ${json.id}, ${studentId}, true)">Withdraw</button>
-                <button class="btn btn-danger" id="reenroll-${json.id}" onclick="withdrawOrReEnroll(${registrationId}, ${json.id}, ${studentId}, false)">ReEnroll</button>
+                <button class="btn btn-primary" id="withdraw-${json.id}" onclick="withdrawOrReEnroll(${json.id}, ${studentId}, true)">Withdraw</button>
+                <button class="btn btn-danger" id="reenroll-${json.id}" onclick="withdrawOrReEnroll(${json.id}, ${studentId}, false)">ReEnroll</button>
             </td>
         </tr>`;
     }
