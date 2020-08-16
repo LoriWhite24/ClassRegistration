@@ -19,6 +19,7 @@ function validateLogin(){
             console.log(this.responseText);
             //student = getStudentById(id);
             alert("Valid login");
+            displayStudentName();
             window.location.href = "./registration.html";
         }
     };
@@ -41,12 +42,28 @@ function getLoggedInStudent(){
     return student;
 }
 
+function displayStudentName(){
+
+    let student = getLoggedInStudent();
+    if(student == null){
+        return;
+    }
+
+    let nameHeaders = document.getElementsByClassName("student-name");
+    for (var index = 0; index < nameHeaders.length; index++){
+        nameHeaders[index].innerHTML += (" " + student.firstName + " " + student.lastName);
+    }
+    
+}
+
 function logOut(){
 
     // need to clear both student obj in local storage and courses/registrations in session storage
     localStorage.clear();
     sessionStorage.clear();
-    window.location.href = "./index.html";
+    // THIS LINE IS NOT WORKING ARGHHHH
+    // window.location.href = "./index.html";
+    window.location.replace("http://www.google.com");
 }
 
 //AJAX call for student using app (for now assume they are logged in)

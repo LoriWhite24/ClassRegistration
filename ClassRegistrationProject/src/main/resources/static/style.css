@@ -88,6 +88,12 @@ nav .navbar-nav li a{
     color: cyan;
 }
 
+/* Shopping cart symbol */
+.cart-title {
+    text-align: center;
+    color: cyan;
+}
+
 .title {
     text-align: center;
     color: cyan;
