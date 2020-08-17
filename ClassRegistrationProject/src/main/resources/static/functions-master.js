@@ -23,7 +23,7 @@ function validateLogin(){
             window.location.href = "./registration.html";
         }
     };
-    xhttpList.open("GET", url, false);
+    xhttpList.open("GET", url, true);
     xhttpList.send();
 
     // do I need to keep returning the student? or can I access it from anywhere in page?
@@ -53,7 +53,7 @@ function displayStudentName(){
     for (var index = 0; index < nameHeaders.length; index++){
         nameHeaders[index].innerHTML += (" " + student.firstName + " " + student.lastName);
     }
-    
+
 }
 
 function logOut(){
@@ -77,10 +77,10 @@ function getStudentById(id){
     xhttpList.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
             sessionStorage.setItem("student", this.responseText); // this code would depend on what this function is used for
-            console.log(this.responseText)
+            console.log(this.responseText);
         }
     };
-    xhttpList.open("GET", url, false);
+    xhttpList.open("GET", url, true);
     xhttpList.send();
     console.log("Student received");  
 
@@ -98,11 +98,11 @@ function getCourses(url){
 
     xhttpList.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
-            sessionStorage.setItem("courses", this.responseText);
+            sessionStorage.setItem("courses", this.responseText);   
         }
     };
 
-    xhttpList.open("GET", url, true);
+    xhttpList.open("GET", url, false);
     xhttpList.send();
     return sessionStorage.getItem("courses");
 }
@@ -158,7 +158,7 @@ function getRegistrationById(){
             //console.log(this.responseText);
         }
     };
-    xhttpList.open("GET", url, false);
+    xhttpList.open("GET", url, true);
     xhttpList.send();
     console.log("Registration received");  
 
@@ -176,7 +176,7 @@ function getRegistrationsForStudent(id){
            sessionStorage.setItem("registrations", this.responseText);
         }
     };
-    xhttpList.open("GET", url, true);
+    xhttpList.open("GET", url, false);
     xhttpList.send();
     console.log("Student's Registrations received");  
     return sessionStorage.getItem("registrations");
@@ -271,7 +271,7 @@ Rendering portions of HTML with data from our database
 
 function renderCourseTableRows(){
    
-    let courseList = getCourses("/api/courses/");
+    let courseList = getCourses("/api/courses");
     let jsonArray = JSON.parse(courseList);
 
     let rows = "";
