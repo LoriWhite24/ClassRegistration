@@ -19,7 +19,6 @@ function validateLogin(){
             console.log(this.responseText);
             //student = getStudentById(id);
             alert("Valid login");
-            displayStudentName();
             window.location.href = "./registration.html";
         }
     };
@@ -45,14 +44,16 @@ function getLoggedInStudent(){
 function displayStudentName(){
 
     let student = getLoggedInStudent();
-    if(student == null){
-        return;
+    // resetting h1 if not logged in
+    if(student == null || student == ""){
+        nameHeader.innerHTML = "Student:";
     }
 
-    let nameHeaders = document.getElementsByClassName("student-name");
-    for (var index = 0; index < nameHeaders.length; index++){
-        nameHeaders[index].innerHTML += (" " + student.firstName + " " + student.lastName);
-    }
+    let nameHeader = document.getElementById("student-name");
+    nameHeader.innerHTML += (" " + student.firstName + " " + student.lastName);
+    // for (var index = 0; index < nameHeaders.length; index++){
+    //     nameHeaders[index].innerHTML += (" " + student.firstName + " " + student.lastName);
+    // }
 
 }
 
