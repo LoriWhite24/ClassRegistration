@@ -2,6 +2,56 @@
     box-sizing:border-box
 }
 
+#student-name {
+    float: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: cyan;
+}
+
+/* Student home page */
+.login-title{
+    text-align: center;
+    color: cyan;
+}
+
+button {   
+    background-color: teal;   
+    width: 100%;  
+    color: cyan;   
+    padding: 15px;   
+    margin: 10px 0px;   
+    border: none;   
+    cursor: pointer;   
+}  
+
+input[type=text], input[type=password] { 
+    width: 100%; 
+    margin: 8px 0;
+    padding: 12px 20px; 
+    display: inline-block; 
+    border: 2px solid green; 
+    box-sizing: border-box; 
+}
+
+button:hover { 
+    opacity: 0.5; 
+} 
+
+.login-container { 
+    padding: 25px; 
+    margin-top: 10%;
+    margin-left: 25%;
+    margin-right: 25%;
+    background-color: lightblue;
+    text-align: center;
+}
+/* Student home page */
+
+
+
 .tableBody {
     margin: 0;
     background-color: white;
@@ -35,6 +85,12 @@ nav .navbar-nav li a{
 
 .student-name {
     text-align: left;
+    color: cyan;
+}
+
+/* Shopping cart symbol */
+.cart-title {
+    text-align: center;
     color: cyan;
 }
 

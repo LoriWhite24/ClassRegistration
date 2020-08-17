@@ -1,6 +1,7 @@
 package com.cognixia.jump.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -11,8 +12,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cognixia.jump.exception.InvalidHasWithdrawnUpdateException;
@@ -60,6 +63,24 @@ public class RegistrationController {
 		}
 		return service.findByCourseId(courseId);
 	}
+	
+	// adding these methods is to test -TK
+	
+	
+	@PutMapping("/update/registration")
+	public @ResponseBody String updateRegistration(@RequestBody Registration updateRegistration) {
+		
+		// check if restaurant exists, if so, then update	
+		Optional<Registration> found = service.findById(updateRegistration.getId());
+		
+		if(found.isPresent()) {
+			service.save(updateRegistration);
+			return "Saved: " + updateRegistration.toString();
+		}else {
+			return "Could not update registration, the id = " + updateRegistration.getId() + " doesn't exist";
+		}
+	}
+	
 	/**
 	 * Withdraws or Re-Enrolls a student in a course.
 	 * @author Lori White

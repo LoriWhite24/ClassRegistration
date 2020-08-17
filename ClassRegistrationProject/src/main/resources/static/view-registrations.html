@@ -11,16 +11,22 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="script.js"></script>
+    <script src="functions-master.js"></script>
     <!-- CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
-    <title>Registeration</title>
-
     <link rel="stylesheet" href="./style.css" />
-    <script src="functions-master.js"></script>
+    <title>View Registrations</title>
+    <script>
+        window.addEventListener("load", function(){
+
+            renderRegisteredCourses();
+            displayStudentName();
+        });
+    </script>
 </head>
+
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="#">
@@ -50,7 +56,11 @@
                 </li>
 
             </ul>
+
+            <h1 id="student-name">Student:</h1>
+
             <form class="form-inline my-2 my-lg-0" id="search-form">
+                <button type="submit" class="btn btn-danger" onclick="logOut()">Logout</button>
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
                     id="search-term" />
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -59,8 +69,7 @@
     </nav>
 </header>
 
-<!--hardcoding student id here for now! -TK-->
-<body class="containter-fluid bg-secondary" onload="renderRegisteredCourses(1)">
+<body class="container-fluid bg-secondary">
     <div class="container">
         <br>
         <h1 class="title">Registered Courses</h1>
